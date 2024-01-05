@@ -1,0 +1,41 @@
+name: MAKE PAGE🚀
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "Sabiya "
+          git config --global user.email "sabiyaabraham10@gmail.com"
+
+      - name: Install Dependencies
+        run: |
+          cd medonma
+          npm install
+
+      - name: Build React App
+        run: |
+          cd medonma
+          npm run build
+
+      - name: Deploy to dist 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_PRIVATE }}
+          BRANCH: gh-pages
+          FOLDER: ./medonma/build
