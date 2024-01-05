@@ -32,16 +32,15 @@ jobs:
         run: |
           cd medonma
           npm run build
+        
+      - name: Copy Index.html and Create 404.html
+        run: |
+          cd medonma/build
+          cp index.html 404.html
 
-      - name: Deploy to dist 🚀
+      - name: Deploy GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           TOKEN: ${{ secrets.TOKEN_PRIVATE }}
-          BRANCH: gh-page
+          BRANCH: gh-pages
           FOLDER: ./medonma/build
-
-      - name: Deploy to GitHub Pages 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.4
-        with:
-          branch: gh-pages
-          folder: medonma/build
