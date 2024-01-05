@@ -1,0 +1,67 @@
+{
+  "name": "medonma",
+  "version": "1.0.0",
+  "description": "MEDONMA LIFE CARE",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev:format": "prettier --write .",
+    "dev:prettier": "prettier --write \"**/**/*.{js,ts,json,css,md}\"",
+    "post:install": "npm run dev:prettier && npm run dev:format && npx tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sabiyaabraham/major-project.git"
+  },
+  "keywords": [
+    "MEDONMA",
+    "LIFE",
+    "CARE"
+  ],
+  "author": "SABIYA ABRAHAM, MUHAMMED IJAZ, SREEHARI K P, GOKUL SURESH, ALAN KRISHNA, ABINAS SULAIMAN",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sabiyaabraham/major-project/issues"
+  },
+  "homepage": "https://github.com/sabiyaabraham/major-project#readme",
+  "dependencies": {
+    "@ajayos/nodelog": "^1.0.2",
+    "@ajayos/nodemon": "^0.0.5",
+    "@ajayos/server": "^1.0.2",
+    "@sendgrid/mail": "^8.1.0",
+    "axios": "^1.6.2",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.1",
+    "cookie-parser": "^1.4.6",
+    "cookie-session": "^2.0.0",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^6.7.0",
+    "gh-pages": "^6.1.0",
+    "helmet": "^6.0.1",
+    "image-size": "^1.0.2",
+    "image-to-base64": "^2.2.0",
+    "jsonwebtoken": "^9.0.0",
+    "localtunnel": "^2.0.2",
+    "mongoose": "^6.9.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "node-schedule": "^2.1.1",
+    "nodemailer": "^6.9.7",
+    "otp-generator": "^4.0.0",
+    "request": "^2.88.2",
+    "socket.io": "^4.6.0",
+    "unique-names-generator": "^4.7.1",
+    "uuid": "^9.0.1",
+    "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.5"
+  }
+}
