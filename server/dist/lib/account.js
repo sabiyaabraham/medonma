@@ -58,7 +58,10 @@ class ACCOUNT {
     return __awaiter(this, void 0, void 0, function* () {
       try {
         // Connect to the MongoDB database using the constructed URL
-        yield mongoose_1.default.connect(this.mongo_url)
+        console.log(this.mongo_url)
+        yield mongoose_1.default.connect(this.mongo_url).then(() => {
+          console.log('Connected to MongoDB')
+        })
       } catch (error) {
         // Handle any connection error by throwing it
         throw error

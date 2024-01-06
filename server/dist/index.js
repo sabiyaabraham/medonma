@@ -40,18 +40,17 @@ var __importDefault =
 Object.defineProperty(exports, '__esModule', { value: true })
 const dotenv_1 = __importDefault(require('dotenv'))
 const axios_1 = __importDefault(require('axios'))
-const express_1 = __importDefault(require('express'))
 const http_1 = __importDefault(require('http'))
 const socket_io_1 = require('socket.io')
+const server_1 = __importDefault(require('./src/server'))
 dotenv_1.default.config({ path: './config.env' })
 require('./lib/account')
 require('@ajayos/nodelog')
-const app = (0, express_1.default)()
-const server = http_1.default.createServer(app)
+const server = http_1.default.createServer(server_1.default)
 const io = new socket_io_1.Server(server, {
   cors: {
     origin: '*',
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'PATCH', 'POST', 'DELETE', 'PUT'],
   },
 })
 const port = Number(process.env.PORT) || 3000
@@ -72,12 +71,13 @@ server.listen(port, () =>
 process.on('uncaughtException', (err) => {
   console.log(err)
   console.log('UNCAUGHT Exception! Shutting down ...')
-  process.exit(1)
+  // run npm start
+  process.exit(1) // Exit Code 1 indicates that a container shut down, either because of an application failure.
 })
 process.on('unhandledRejection', (err) => {
   console.log(err)
   console.log('UNHANDLED REJECTION! Shutting down ...')
   server.close(() => {
-    process.exit(1)
+    process.exit(1) // Exit Code 1 indicates that a container shut down, either because of an application failure.
   })
 })

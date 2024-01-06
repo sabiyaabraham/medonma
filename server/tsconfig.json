@@ -33,6 +33,9 @@
     "moduleResolution": "node",
     "strictPropertyInitialization": false
   },
+  "paths": {
+    "Routes/*": ["src/src/Routes/*"]
+  },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "backup"]
 }

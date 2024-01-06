@@ -1,24 +1,22 @@
-import mongoose from 'mongoose'
-import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import axios from 'axios'
-import express, { Application } from 'express'
 import http from 'http'
 import { Server } from 'socket.io'
+
 import { User } from './src/Models'
+import app from './src/server'
 
 dotenv.config({ path: './config.env' })
 
 require('./lib/account')
 require('@ajayos/nodelog')
 
-const app: Application = express()
 const server: http.Server = http.createServer(app)
 
 const io: Server = new Server(server, {
   cors: {
     origin: '*',
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'PATCH', 'POST', 'DELETE', 'PUT'],
   },
 })
 
@@ -41,13 +39,14 @@ server.listen(port, async () => {
 process.on('uncaughtException', (err) => {
   console.log(err)
   console.log('UNCAUGHT Exception! Shutting down ...')
-  process.exit(1)
+  // run npm start
+  process.exit(1) // Exit Code 1 indicates that a container shut down, either because of an application failure.
 })
 
 process.on('unhandledRejection', (err) => {
   console.log(err)
   console.log('UNHANDLED REJECTION! Shutting down ...')
   server.close(() => {
-    process.exit(1)
+    process.exit(1) // Exit Code 1 indicates that a container shut down, either because of an application failure.
   })
 })

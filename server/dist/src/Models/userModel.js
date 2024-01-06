@@ -100,6 +100,13 @@ const userSchema = new mongoose_1.Schema(
     dob: Date,
     age: Number,
     address: String,
+    blood_group: String,
+    user_type: {
+      type: String,
+      required: [true, 'user type is required'],
+      enum: ['user', 'admin', 'hospital'],
+      default: 'user',
+    },
     email: {
       type: String,
       required: [true, 'Email is required'],
@@ -208,6 +215,7 @@ userSchema.pre('save', function (next) {
 userSchema.pre('save', function (next) {
   if (!this.isModified('password') || this.isNew || !this.password)
     return next()
+  // @ts-ignore
   this.password_changed_at = Date.now() - 1000
   next()
 })
