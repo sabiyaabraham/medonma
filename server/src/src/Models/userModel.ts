@@ -10,7 +10,8 @@ interface IUser extends Document {
   dob?: Date
   age?: number
   address?: string
-
+  blood_group: String
+  user_type: 'user' | 'admin' | 'hospital'
   email: string
   phoneNumber: string
   password: string
@@ -54,6 +55,13 @@ const userSchema: Schema<IUser> = new Schema(
     dob: Date,
     age: Number,
     address: String,
+    blood_group: String,
+    user_type: {
+      type: String,
+      required: [true, 'user type is required'],
+      enum: ['user', 'admin', 'hospital'],
+      default: 'user',
+    },
 
     email: {
       type: String,
@@ -170,6 +178,7 @@ userSchema.pre<IUser>('save', function (next) {
   if (!this.isModified('password') || this.isNew || !this.password)
     return next()
 
+  // @ts-ignore
   this.password_changed_at = Date.now() - 1000
   next()
 })

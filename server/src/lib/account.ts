@@ -28,7 +28,10 @@ class ACCOUNT {
   async connect(): Promise<void> {
     try {
       // Connect to the MongoDB database using the constructed URL
-      await mongoose.connect(this.mongo_url)
+      console.log(this.mongo_url)
+      await mongoose.connect(this.mongo_url).then(() => {
+        console.log('Connected to MongoDB')
+      })
     } catch (error) {
       // Handle any connection error by throwing it
       throw error
