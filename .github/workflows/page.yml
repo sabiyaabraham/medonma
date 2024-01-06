@@ -20,7 +20,7 @@ jobs:
 
       - name: Set up Git
         run: |
-          git config --global user.name "Sabiya "
+          git config --global user.name "Sabiya Abraham"
           git config --global user.email "sabiyaabraham10@gmail.com"
 
       - name: Install Dependencies
