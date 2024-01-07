@@ -9,6 +9,7 @@ interface IUser extends Document {
   avatar?: string
   dob?: Date
   age?: number
+  sex: String
   address?: string
   blood_group: String
   user_type: 'user' | 'admin' | 'hospital'
@@ -56,6 +57,7 @@ const userSchema: Schema<IUser> = new Schema(
     age: Number,
     address: String,
     blood_group: String,
+    sex: String,
     user_type: {
       type: String,
       required: [true, 'user type is required'],
