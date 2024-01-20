@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 import axios from 'axios'
 import http from 'http'
 import { Server } from 'socket.io'
+import 'colors'
 
 import { User } from './src/Models'
 import app from './src/server'
@@ -23,7 +24,7 @@ const io: Server = new Server(server, {
 const port: number = Number(process.env.PORT) || 3000
 
 server.listen(port, async () => {
-  console.log(`App running on port = ${port} ...`)
+  console.log(`App running on port = ${port} ...` .bgBlue.white)
 
   try {
     // Fetch public IP using an external service

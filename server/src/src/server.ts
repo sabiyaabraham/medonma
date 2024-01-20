@@ -3,18 +3,16 @@ import path from 'path'
 import routes from './Routes/index'
 import bodyParser from 'body-parser'
 import cors from 'cors'
+import morgan from 'morgan'
 import cookieParser from 'cookie-parser'
 import session from 'cookie-session'
+import 'colors'
+
 
 const app: Application = express()
 
-app.use(
-  cors({
-    origin: '*',
-    methods: ['GET', 'PATCH', 'POST', 'DELETE', 'PUT'],
-    credentials: true,
-  }),
-)
+app.use(cors())
+app.use(morgan("dev"));
 
 app.use(cookieParser())
 
