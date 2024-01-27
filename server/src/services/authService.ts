@@ -13,11 +13,17 @@ import filterObj from '../lib/filterObj'
 import MAIL from '../lib/mail'
 import { User, Device, Admin } from '../Models'
 import protect from '../utils/protect'
+import { Request } from 'express';
 
 const JWT_SECRET: string = process.env.JWT_SECRET
   ? process.env.JWT_SECRET
   : 'medonma'
 
+  interface DecodedToken {
+    id: string;
+    email: string;
+  }
+  
 const signToken = (id: string, email: string): string =>
   jwt.sign({ id, email }, JWT_SECRET, {
     expiresIn: '30d', // Token expires in 30 days
@@ -35,7 +41,7 @@ interface CreateResponse {
   status: number
   error: boolean
   message: string
-  data: { email: string } | { errorDetails: any } | null
+  data: { email?: string, errorDetails?: any } | null
 }
 
 /**
@@ -66,7 +72,7 @@ interface CreateResponse {
  * const result: CreateResponse = await create(userData);
  * console.log(result);
  */
-export const create = async (data: CreateUserData): Promise<CreateResponse> => {
+export const create = async (data: CreateUserData, req:Request): Promise<CreateResponse> => {
   try {
     const { firstName, lastName, email } = data
 
@@ -201,7 +207,7 @@ export const create = async (data: CreateUserData): Promise<CreateResponse> => {
         data: { email },
       }
     }
-  } catch (error) {
+  } catch (error: any) {
     return {
       status: 500,
       error: true,
@@ -253,7 +259,7 @@ interface VerifyResponse {
   data: null
 }
 
-export const verify = async (data: VerifyData): Promise<VerifyResponse> => {
+export const verify = async (data: VerifyData, req: Request): Promise<VerifyResponse> => {
   try {
     // Destructure data for easier access
     const { email, otp } = data
@@ -280,6 +286,7 @@ export const verify = async (data: VerifyData): Promise<VerifyResponse> => {
       }
     }
 
+    // @ts-ignore
     if (user.otp_expiry_time <= Date.now()) {
       return {
         status: 400,
@@ -289,6 +296,7 @@ export const verify = async (data: VerifyData): Promise<VerifyResponse> => {
       }
     }
 
+    // @ts-ignore
     if (user.otp_verify_attempts >= 6 || user.otp_attempts >= 6) {
       return {
         status: 400,
@@ -299,9 +307,11 @@ export const verify = async (data: VerifyData): Promise<VerifyResponse> => {
     }
 
     // Check if the provided OTP is incorrect
+    // @ts-ignore
     if (!(await user.correctOTP(otp, user.otp))) {
       // Increment OTP verification attempts if OTP is incorrect
       user.otp_verify_attempts = (user.otp_verify_attempts || 0) + 1
+      // @ts-ignore
       await user.save({ new: true, validateModifiedOnly: true })
 
       return {
@@ -316,6 +326,7 @@ export const verify = async (data: VerifyData): Promise<VerifyResponse> => {
     user.verified = true
     user.otp = undefined
 
+    // @ts-ignore
     await user.save({ new: true, validateModifiedOnly: true })
 
     // Send a confirmation email
@@ -327,7 +338,7 @@ export const verify = async (data: VerifyData): Promise<VerifyResponse> => {
       message: 'Account successfully verified. Please login with ' + user.email,
       data: null,
     }
-  } catch (error) {
+  } catch (error: any) {
     // Return a standardized error response with the actual error message
     return {
       status: 500,
@@ -363,11 +374,12 @@ interface ReRequestResponse {
   status: number
   error: boolean
   message: string
-  data: { email: string } | null
+  data: { email?: string, errorDetails?: any } | null
 }
 
 export const reRequest = async (
   data: ReRequestData,
+  req: Request,
 ): Promise<ReRequestResponse> => {
   try {
     const { email } = data
@@ -394,7 +406,9 @@ export const reRequest = async (
       }
     }
 
+    // @ts-ignore
     if (user.otp_attempts >= 6) {
+      // @ts-ignore
       if (Date.now() <= user.otp_request_date) {
         // Calculate and return time balance in hours and minutes format
         const timeBalance = calculateTimeBalance(user.otp_request_date)
@@ -427,6 +441,7 @@ export const reRequest = async (
     // Update user's OTP details and reset attempts
     user.otp = mailData.data
 
+    // @ts-ignore
     await user.save({ new: true, validateModifiedOnly: true })
 
     // Return success message
@@ -436,7 +451,7 @@ export const reRequest = async (
       message: 'New OTP sent successfully',
       data: { email },
     }
-  } catch (error) {
+  } catch (error: any) {
     // Handle internal server error
     return {
       status: 500,
@@ -472,11 +487,12 @@ interface ReSetUserResponse {
   status: number
   error: boolean
   message: string
-  data: null
+  data: { errorDetails: any } | null
 }
 
 export const reSetUser = async (
   data: ReSetUserData,
+  req: Request,
 ): Promise<ReSetUserResponse> => {
   try {
     const { email } = data
@@ -511,13 +527,13 @@ export const reSetUser = async (
       message: 'User information reset successfully',
       data: null,
     }
-  } catch (error) {
+  } catch (error: any) {
     // Handle internal server error
     return {
       status: 500,
       error: true,
       message: 'Internal Server Error',
-      data: { errorDetails: error.message || '' },
+      data: { errorDetails: error.message },
     }
   }
 }
@@ -562,7 +578,7 @@ interface LoginResponse {
   data: { token: string; email: string } | null
 }
 
-export const login = async (data: LoginData): Promise<LoginResponse> => {
+export const login = async (data: LoginData, req: Request): Promise<LoginResponse> => {
   try {
     const { email, password, deviceData } = data
 
@@ -655,7 +671,7 @@ export const login = async (data: LoginData): Promise<LoginResponse> => {
       message: 'OTP sent for device verification.',
       data: { token, email: user.email },
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error(error)
     return {
       status: 500,
@@ -701,6 +717,7 @@ interface VerifyLoginResponse {
 
 export const verifyLogin = async (
   data: VerifyLoginData,
+  req: Request,
 ): Promise<VerifyLoginResponse> => {
   try {
     const { token, otp } = data
@@ -709,8 +726,8 @@ export const verifyLogin = async (
 
     try {
       // Verify the authentication token
-      decoded = jwt.verify(token, process.env.JWT_SECRET)
-    } catch (error) {
+      decoded = jwt.verify(token, JWT_SECRET) as DecodedToken
+    } catch (error: any) {
       // Handle JWT verification errors
       if (error.name === 'JsonWebTokenError') {
         return {
@@ -813,6 +830,7 @@ export const verifyLogin = async (
       }
     }
 
+    // @ts-ignore
     if (device.otp_verify_attempts >= 6 || device.otp_attempts >= 6) {
       return {
         status: 400,
@@ -822,6 +840,7 @@ export const verifyLogin = async (
       }
     }
 
+    // @ts-ignore
     if (device.otp_expiry_time <= Date.now()) {
       return {
         status: 400,
@@ -832,9 +851,11 @@ export const verifyLogin = async (
     }
 
     // Check if the provided OTP is incorrect
+    // @ts-ignore
     if (!(await device.correctOTP(otp, device.otp))) {
       // Increment OTP verification attempts if OTP is incorrect
       device.otp_verify_attempts = (device.otp_verify_attempts || 0) + 1
+      // @ts-ignore
       await device.save({ new: true, validateModifiedOnly: true })
 
       return {
@@ -848,6 +869,7 @@ export const verifyLogin = async (
     // Mark the device as verified
     device.verified = true
     device.otp = undefined
+    // @ts-ignore
     await device.save({ new: true, validateModifiedOnly: true })
 
     const mailData = await MAIL.sendDevice(
@@ -862,7 +884,7 @@ export const verifyLogin = async (
       message: 'Device verified successfully.',
       data: null,
     }
-  } catch (error) {
+  } catch (error: any) {
     return {
       status: 500,
       error: true,
@@ -899,11 +921,12 @@ interface DeviceResendOTPResponse {
   status: number
   error: boolean
   message: string
-  data: { email: string } | null
+  data: { email?: string, errorDetails?: any } | null
 }
 
 export const deviceResendOTP = async (
   data: DeviceResendOTPData,
+  req: Request,
 ): Promise<DeviceResendOTPResponse> => {
   try {
     const { email, token } = data
@@ -945,7 +968,9 @@ export const deviceResendOTP = async (
     }
 
     // Check if the device has reached maximum OTP attempts
+    // @ts-ignore
     if (device.otp_attempts >= 6) {
+      // @ts-ignore
       if (Date.now() <= device.otp_request_date) {
         // Calculate and return time balance in hours and minutes format
         const timeBalance = calculateTimeBalance(device.otp_request_date)
@@ -978,6 +1003,7 @@ export const deviceResendOTP = async (
 
     // Update device's OTP details and reset attempts
     device.otp = mailData.data
+    // @ts-ignore
     await device.save({ new: true, validateModifiedOnly: true })
 
     // Return success message
@@ -987,7 +1013,7 @@ export const deviceResendOTP = async (
       message: 'New OTP sent to device successfully',
       data: { email },
     }
-  } catch (error) {
+  } catch (error: any) {
     // Handle internal server error
     return {
       status: 500,
@@ -1024,11 +1050,12 @@ interface LogoutDeviceResponse {
   status: number
   error: boolean
   message: string
-  data: { email: string; token: string } | null
+  data: { email?: string; token?: string; errorDetails?: any } | null
 }
 
 export const logoutDevice = async (
   data: LogoutDeviceData,
+  req: Request,
 ): Promise<LogoutDeviceResponse> => {
   try {
     const { token } = data
@@ -1037,8 +1064,8 @@ export const logoutDevice = async (
 
     try {
       // Verify the authentication token
-      decoded = jwt.verify(token, process.env.JWT_SECRET)
-    } catch (error) {
+      decoded = jwt.verify(token, JWT_SECRET)
+    } catch (error: any) {
       // Handle JWT verification errors
       if (error.name === 'JsonWebTokenError') {
         return {
@@ -1069,6 +1096,7 @@ export const logoutDevice = async (
     }
 
     // Check if the user exists
+    // @ts-ignore
     const user = await User.findOne({ email: decoded.email })
 
     if (!user) {
@@ -1108,6 +1136,7 @@ export const logoutDevice = async (
     }
 
     // Continue with the code using the decoded token
+    // @ts-ignore
     if (decoded.id !== user._id.toString()) {
       return {
         status: 400,
@@ -1139,7 +1168,7 @@ export const logoutDevice = async (
       message: 'Device logged out successfully',
       data: null,
     }
-  } catch (error) {
+  } catch (error: any) {
     // Handle internal server error
     return {
       status: 500,
@@ -1173,10 +1202,10 @@ export const logoutDevice = async (
  * console.log(result);
  */
 interface ProtectData {
-  token: string
-  email: string
-  id: string
-  deviceID: string
+  token?: string
+  email?: string
+  id?: string
+  deviceID?: string
 }
 
 interface ProtectResponse {
@@ -1195,11 +1224,13 @@ export const protectUser = async (
     // Check if the user exists
     const user = await User.findOne({ email })
 
+    // @ts-ignore
     const protect_info = await protect(user)
 
     if (protect_info.error) return protect_info
 
     // Continue with the code using the decoded token
+    // @ts-ignore
     if (id !== user._id.toString()) {
       return {
         status: 400,
@@ -1211,6 +1242,7 @@ export const protectUser = async (
 
     // Verify the user's device
     const device = await Device.findOne({
+      // @ts-ignore
       user: user._id,
       token,
     })
@@ -1237,9 +1269,10 @@ export const protectUser = async (
       status: 200,
       error: false,
       message: 'Device verified successfully.',
+      // @ts-ignore
       data: { user, device },
     }
-  } catch (error) {
+  } catch (error: any) {
     return {
       status: 500,
       error: true,
@@ -1272,10 +1305,10 @@ export const protectUser = async (
  * console.log(result);
  */
 interface ProtectAdminData {
-  token: string
-  email: string
-  id: string
-  deviceID: string
+  token?: string
+  email?: string
+  id?: string
+  deviceID?: string
 }
 
 interface ProtectAdminResponse {
@@ -1303,6 +1336,7 @@ export const protectAdmin = async (
       }
     }
 
+    // @ts-ignore
     const protect_info = await protect(admin)
 
     if (protect_info.error) return protect_info
@@ -1347,7 +1381,7 @@ export const protectAdmin = async (
       message: 'Device verified successfully.',
       data: { admin, device },
     }
-  } catch (error) {
+  } catch (error: any) {
     return {
       status: 500,
       error: true,
@@ -1387,8 +1421,10 @@ interface ForgotPasswordResponse {
 
 export const forgotPassword = async (
   data: ForgotPasswordData,
+  req: Request,
+  // @ts-ignore
 ): Promise<ForgotPasswordResponse> => {
-  // Implementation of the forgotPassword function
+  // TODO: forgotPassword function
   // ...
 }
 
@@ -1424,6 +1460,7 @@ interface VerifyForgotPasswordResponse {
 
 // export const verifyForgotPassword = async (
 //   data: VerifyForgotPasswordData,
+//   req: Request,
 // ): Promise<VerifyForgotPasswordResponse> => {
 //   // TODO: verifyForgotPassword function
 //   // ...

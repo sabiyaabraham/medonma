@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verifyForgotPassword = exports.forgotPassword = exports.protectAdmin = exports.protectUser = exports.logoutDevice = exports.deviceResendOTP = exports.verifyLogin = exports.login = exports.reSetUser = exports.reRequest = exports.verify = exports.create = void 0;
+exports.forgotPassword = exports.protectAdmin = exports.protectUser = exports.logoutDevice = exports.deviceResendOTP = exports.verifyLogin = exports.login = exports.reSetUser = exports.reRequest = exports.verify = exports.create = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const unique_names_generator_1 = require("unique-names-generator");
 const filterObj_1 = __importDefault(require("../lib/filterObj"));
@@ -53,7 +53,7 @@ const signToken = (id, email) => jsonwebtoken_1.default.sign({ id, email }, JWT_
  * const result: CreateResponse = await create(userData);
  * console.log(result);
  */
-const create = (data) => __awaiter(void 0, void 0, void 0, function* () {
+const create = (data, req) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { firstName, lastName, email } = data;
         // Filter out unnecessary fields
@@ -120,6 +120,7 @@ const create = (data) => __awaiter(void 0, void 0, void 0, function* () {
                         }
                         // Reset attempts for a new day
                         existingUser.set(Object.assign(Object.assign({}, filteredBody), { otp: mailData.data }));
+                        // @ts-ignore
                         yield existingUser.save({ new: true, validateModifiedOnly: true });
                         return {
                             status: 200,
@@ -145,6 +146,7 @@ const create = (data) => __awaiter(void 0, void 0, void 0, function* () {
                 };
             }
             newUser.set(Object.assign(Object.assign({}, filteredBody), { otp: mailData.data }));
+            // @ts-ignore
             yield newUser.save({ new: true, validateModifiedOnly: true });
             return {
                 status: 200,
@@ -171,7 +173,7 @@ function calculateTimeBalance(otpRequestDate) {
     // You may need to create it based on your specific requirements
     return { hours: 0, minutes: 0 };
 }
-const verify = (data) => __awaiter(void 0, void 0, void 0, function* () {
+const verify = (data, req) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Destructure data for easier access
         const { email, otp } = data;
@@ -194,6 +196,7 @@ const verify = (data) => __awaiter(void 0, void 0, void 0, function* () {
                 data: null,
             };
         }
+        // @ts-ignore
         if (user.otp_expiry_time <= Date.now()) {
             return {
                 status: 400,
@@ -202,6 +205,7 @@ const verify = (data) => __awaiter(void 0, void 0, void 0, function* () {
                 data: null,
             };
         }
+        // @ts-ignore
         if (user.otp_verify_attempts >= 6 || user.otp_attempts >= 6) {
             return {
                 status: 400,
@@ -211,9 +215,11 @@ const verify = (data) => __awaiter(void 0, void 0, void 0, function* () {
             };
         }
         // Check if the provided OTP is incorrect
+        // @ts-ignore
         if (!(yield user.correctOTP(otp, user.otp))) {
             // Increment OTP verification attempts if OTP is incorrect
             user.otp_verify_attempts = (user.otp_verify_attempts || 0) + 1;
+            // @ts-ignore
             yield user.save({ new: true, validateModifiedOnly: true });
             return {
                 status: 400,
@@ -225,6 +231,7 @@ const verify = (data) => __awaiter(void 0, void 0, void 0, function* () {
         // Mark the user as verified, clear OTP, and save changes
         user.verified = true;
         user.otp = undefined;
+        // @ts-ignore
         yield user.save({ new: true, validateModifiedOnly: true });
         // Send a confirmation email
         yield mail_1.default.accountCreated(`${user.firstName} ${user.lastName}`, user.email);
@@ -246,7 +253,7 @@ const verify = (data) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.verify = verify;
-const reRequest = (data) => __awaiter(void 0, void 0, void 0, function* () {
+const reRequest = (data, req) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email } = data;
         // Find the user with the provided email
@@ -268,7 +275,9 @@ const reRequest = (data) => __awaiter(void 0, void 0, void 0, function* () {
                 data: null,
             };
         }
+        // @ts-ignore
         if (user.otp_attempts >= 6) {
+            // @ts-ignore
             if (Date.now() <= user.otp_request_date) {
                 // Calculate and return time balance in hours and minutes format
                 const timeBalance = calculateTimeBalance(user.otp_request_date);
@@ -293,6 +302,7 @@ const reRequest = (data) => __awaiter(void 0, void 0, void 0, function* () {
         }
         // Update user's OTP details and reset attempts
         user.otp = mailData.data;
+        // @ts-ignore
         yield user.save({ new: true, validateModifiedOnly: true });
         // Return success message
         return {
@@ -313,7 +323,7 @@ const reRequest = (data) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.reRequest = reRequest;
-const reSetUser = (data) => __awaiter(void 0, void 0, void 0, function* () {
+const reSetUser = (data, req) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email } = data;
         // Find the user with the provided email
@@ -349,12 +359,12 @@ const reSetUser = (data) => __awaiter(void 0, void 0, void 0, function* () {
             status: 500,
             error: true,
             message: 'Internal Server Error',
-            data: { errorDetails: error.message || '' },
+            data: { errorDetails: error.message },
         };
     }
 });
 exports.reSetUser = reSetUser;
-const login = (data) => __awaiter(void 0, void 0, void 0, function* () {
+const login = (data, req) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password, deviceData } = data;
         // Check if the user exists
@@ -436,13 +446,13 @@ const login = (data) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.login = login;
-const verifyLogin = (data) => __awaiter(void 0, void 0, void 0, function* () {
+const verifyLogin = (data, req) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { token, otp } = data;
         let decoded;
         try {
             // Verify the authentication token
-            decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
+            decoded = jsonwebtoken_1.default.verify(token, JWT_SECRET);
         }
         catch (error) {
             // Handle JWT verification errors
@@ -534,6 +544,7 @@ const verifyLogin = (data) => __awaiter(void 0, void 0, void 0, function* () {
                 data: null,
             };
         }
+        // @ts-ignore
         if (device.otp_verify_attempts >= 6 || device.otp_attempts >= 6) {
             return {
                 status: 400,
@@ -542,6 +553,7 @@ const verifyLogin = (data) => __awaiter(void 0, void 0, void 0, function* () {
                 data: null,
             };
         }
+        // @ts-ignore
         if (device.otp_expiry_time <= Date.now()) {
             return {
                 status: 400,
@@ -551,9 +563,11 @@ const verifyLogin = (data) => __awaiter(void 0, void 0, void 0, function* () {
             };
         }
         // Check if the provided OTP is incorrect
+        // @ts-ignore
         if (!(yield device.correctOTP(otp, device.otp))) {
             // Increment OTP verification attempts if OTP is incorrect
             device.otp_verify_attempts = (device.otp_verify_attempts || 0) + 1;
+            // @ts-ignore
             yield device.save({ new: true, validateModifiedOnly: true });
             return {
                 status: 400,
@@ -565,6 +579,7 @@ const verifyLogin = (data) => __awaiter(void 0, void 0, void 0, function* () {
         // Mark the device as verified
         device.verified = true;
         device.otp = undefined;
+        // @ts-ignore
         yield device.save({ new: true, validateModifiedOnly: true });
         const mailData = yield mail_1.default.sendDevice(user.firstName + ' ' + user.lastName, user.email, device);
         return {
@@ -584,7 +599,7 @@ const verifyLogin = (data) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.verifyLogin = verifyLogin;
-const deviceResendOTP = (data) => __awaiter(void 0, void 0, void 0, function* () {
+const deviceResendOTP = (data, req) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, token } = data;
         // Find the user with the provided email
@@ -619,7 +634,9 @@ const deviceResendOTP = (data) => __awaiter(void 0, void 0, void 0, function* ()
             };
         }
         // Check if the device has reached maximum OTP attempts
+        // @ts-ignore
         if (device.otp_attempts >= 6) {
+            // @ts-ignore
             if (Date.now() <= device.otp_request_date) {
                 // Calculate and return time balance in hours and minutes format
                 const timeBalance = calculateTimeBalance(device.otp_request_date);
@@ -644,6 +661,7 @@ const deviceResendOTP = (data) => __awaiter(void 0, void 0, void 0, function* ()
         }
         // Update device's OTP details and reset attempts
         device.otp = mailData.data;
+        // @ts-ignore
         yield device.save({ new: true, validateModifiedOnly: true });
         // Return success message
         return {
@@ -664,13 +682,13 @@ const deviceResendOTP = (data) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.deviceResendOTP = deviceResendOTP;
-const logoutDevice = (data) => __awaiter(void 0, void 0, void 0, function* () {
+const logoutDevice = (data, req) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { token } = data;
         let decoded;
         try {
             // Verify the authentication token
-            decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
+            decoded = jsonwebtoken_1.default.verify(token, JWT_SECRET);
         }
         catch (error) {
             // Handle JWT verification errors
@@ -699,6 +717,7 @@ const logoutDevice = (data) => __awaiter(void 0, void 0, void 0, function* () {
             };
         }
         // Check if the user exists
+        // @ts-ignore
         const user = yield Models_1.User.findOne({ email: decoded.email });
         if (!user) {
             return {
@@ -733,6 +752,7 @@ const logoutDevice = (data) => __awaiter(void 0, void 0, void 0, function* () {
             };
         }
         // Continue with the code using the decoded token
+        // @ts-ignore
         if (decoded.id !== user._id.toString()) {
             return {
                 status: 400,
@@ -777,10 +797,12 @@ const protectUser = (data) => __awaiter(void 0, void 0, void 0, function* () {
         const { token, email, id, deviceID } = data;
         // Check if the user exists
         const user = yield Models_1.User.findOne({ email });
+        // @ts-ignore
         const protect_info = yield (0, protect_1.default)(user);
         if (protect_info.error)
             return protect_info;
         // Continue with the code using the decoded token
+        // @ts-ignore
         if (id !== user._id.toString()) {
             return {
                 status: 400,
@@ -791,6 +813,7 @@ const protectUser = (data) => __awaiter(void 0, void 0, void 0, function* () {
         }
         // Verify the user's device
         const device = yield Models_1.Device.findOne({
+            // @ts-ignore
             user: user._id,
             token,
         });
@@ -814,6 +837,7 @@ const protectUser = (data) => __awaiter(void 0, void 0, void 0, function* () {
             status: 200,
             error: false,
             message: 'Device verified successfully.',
+            // @ts-ignore
             data: { user, device },
         };
     }
@@ -840,6 +864,7 @@ const protectAdmin = (data) => __awaiter(void 0, void 0, void 0, function* () {
                 data: null,
             };
         }
+        // @ts-ignore
         const protect_info = yield (0, protect_1.default)(admin);
         if (protect_info.error)
             return protect_info;
@@ -890,16 +915,18 @@ const protectAdmin = (data) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.protectAdmin = protectAdmin;
-const forgotPassword = (data) => __awaiter(void 0, void 0, void 0, function* () {
-    // Implementation of the forgotPassword function
+const forgotPassword = (data, req) => __awaiter(void 0, void 0, void 0, function* () {
+    // TODO: forgotPassword function
     // ...
 });
 exports.forgotPassword = forgotPassword;
-const verifyForgotPassword = (data) => __awaiter(void 0, void 0, void 0, function* () {
-    // Implementation of the verifyForgotPassword function
-    // ...
-});
-exports.verifyForgotPassword = verifyForgotPassword;
+// export const verifyForgotPassword = async (
+//   data: VerifyForgotPasswordData,
+//   req: Request,
+// ): Promise<VerifyForgotPasswordResponse> => {
+//   // TODO: verifyForgotPassword function
+//   // ...
+// }
 /**
  * Reset Password.
  *

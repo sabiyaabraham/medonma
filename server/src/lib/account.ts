@@ -33,6 +33,7 @@ class ACCOUNT {
           `Connected To Mongodb Database ${mongoose.connection.host}`.bgMagenta
             .white,
         )
+        mongoose.set('strictQuery', true)
       })
     } catch (error) {
       console.log(`Mongodb Database Error ${error}`.bgRed.white)

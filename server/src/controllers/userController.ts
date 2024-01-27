@@ -1,92 +1,112 @@
 import { Request, Response } from 'express'
 import asyncHandler from 'express-async-handler'
 import handleResponse from '../lib/handleResponse'
-import {
-  create,
-  verify,
-  reRequest,
-  reSetUser,
-  login,
-  verifyLogin,
-  deviceResendOTP,
-  logoutDevice,
-  forgotPassword,
-  verifyForgotPassword,
-  reSetPassword,
-  reRequestReSetPassword,
-} from '../services/authService'
+import * as authService from '../services/authService'
+import * as userService from '../services/userService'
 
-import {
-  userInfo,
-  updateInfo,
-  updatePic,
-  removeProfile,
-} from '../services/userService'
+const {
+  create: create_,
+  verify: verify_,
+  reRequest: reRequest_,
+  reSetUser: reSetUser_,
+  login: login_,
+  verifyLogin: verifyLogin_,
+  deviceResendOTP: deviceResendOTP_,
+  logoutDevice: logoutDevice_,
+  forgotPassword: forgotPassword_,
+  // verifyForgotPassword: verifyForgotPassword_,
+  // reSetPassword: reSetPassword_,
+  // reRequestReSetPassword: reRequestReSetPassword_,
+} = authService;
 
+const {
+  userInfo: userInfo_,
+  updateInfo: updateInfo_,
+  updatePic: updatePic_,
+  removeProfile: removeProfile_,
+} = userService;
+
+
+// @ts-ignore
 export const create = asyncHandler(async (req: Request, res: Response) =>
-  handleResponse(create(req.body, req), res),
+  handleResponse(create_(req.body, req), res),
 )
 
+// @ts-ignore
 export const verify = asyncHandler(async (req: Request, res: Response) =>
-  handleResponse(verify(req.body, req), res),
+  handleResponse(verify_(req.body, req), res),
 )
 
+// @ts-ignore
 export const reRequest = asyncHandler(async (req: Request, res: Response) =>
-  handleResponse(reRequest(req.body, req), res),
+  handleResponse(reRequest_(req.body, req), res),
 )
 
+// @ts-ignore
 export const reSetUser = asyncHandler(async (req: Request, res: Response) =>
-  handleResponse(reSetUser(req.body, req), res),
+  handleResponse(reSetUser_(req.body, req), res),
 )
 
+// @ts-ignore
 export const login = asyncHandler(async (req: Request, res: Response) =>
-  handleResponse(login(req.body, req), res),
+  handleResponse(login_(req.body, req), res),
 )
 
+// @ts-ignore
 export const verifyLogin = asyncHandler(async (req: Request, res: Response) =>
-  handleResponse(verifyLogin(req.body, req), res),
+  handleResponse(verifyLogin_(req.body, req), res),
 )
 
 export const deviceResendOTP = asyncHandler(
+  // @ts-ignore
   async (req: Request, res: Response) =>
-    handleResponse(deviceResendOTP(req.body, req), res),
+    handleResponse(deviceResendOTP_(req.body, req), res),
 )
 
+// @ts-ignore
 export const logoutDevice = asyncHandler(async (req: Request, res: Response) =>
-  handleResponse(logoutDevice(req.body, req), res),
+  handleResponse(logoutDevice_(req.body, req), res),
 )
 
-export const forgotPassword = asyncHandler(
-  async (req: Request, res: Response) =>
-    handleResponse(forgotPassword(req.body, req), res),
-)
+// export const forgotPassword = asyncHandler(
+//   // @ts-ignore
+//   async (req: Request, res: Response) =>
+//     handleResponse(forgotPassword_(req.body, req), res),
+// )
 
-export const verifyForgotPassword = asyncHandler(
-  async (req: Request, res: Response) =>
-    handleResponse(verifyForgotPassword(req.body, req), res),
-)
+// // @ts-ignore
+// export const verifyForgotPassword = asyncHandler(
+//   async (req: Request, res: Response) =>
+//     handleResponse(verifyForgotPassword(req.body, req), res),
+// )
 
-export const reSetPassword = asyncHandler(async (req: Request, res: Response) =>
-  handleResponse(reSetPassword(req.body, req), res),
-)
+// @ts-ignore
+// export const reSetPassword = asyncHandler(async (req: Request, res: Response) =>
+//   handleResponse(reSetPassword_(req.body, req), res),
+// )
 
-export const reRequestReSetPassword = asyncHandler(
-  async (req: Request, res: Response) =>
-    handleResponse(reRequestReSetPassword(req.body, req), res),
-)
+// export const reRequestReSetPassword = asyncHandler(
+//   // @ts-ignore
+//   async (req: Request, res: Response) =>
+//     handleResponse(reRequestReSetPassword_(req.body, req), res),
+// )
 
+// @ts-ignore
 export const userInfo = asyncHandler(async (req: Request, res: Response) =>
-  handleResponse(userInfo(req.body, req), res),
+  handleResponse(userInfo_(req.body, req), res),
 )
 
+// @ts-ignore
 export const updateInfo = asyncHandler(async (req: Request, res: Response) =>
-  handleResponse(updateInfo(req.body, req), res),
+  handleResponse(updateInfo_(req.body, req), res),
 )
 
+// @ts-ignore
 export const updatePic = asyncHandler(async (req: Request, res: Response) =>
-  handleResponse(updatePic(req.body, req), res),
+  handleResponse(updatePic_(req.body, req), res),
 )
 
+// @ts-ignore
 export const removeProfile = asyncHandler(async (req: Request, res: Response) =>
-  handleResponse(removeProfile(req.body, req), res),
+  handleResponse(removeProfile_(req.body, req), res),
 )

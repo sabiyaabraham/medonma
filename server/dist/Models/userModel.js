@@ -182,6 +182,8 @@ userSchema.methods.correctPassword = function (candidatePassword, userPassword) 
 };
 userSchema.methods.correctOTP = function (candidateOTP, userOTP) {
     return __awaiter(this, void 0, void 0, function* () {
+        if (!userOTP)
+            return false;
         return yield bcryptjs_1.default.compare(candidateOTP, userOTP);
     });
 };

@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer'
 import otpGenerator from 'otp-generator'
-import { otp, created, device_otp, device_login } from '../src/Templates/mail'
+import { otp, created, device_otp, device_login } from '../Templates/mail'
 
 class MAIL {
   private EMAIL = {

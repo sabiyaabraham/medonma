@@ -36,6 +36,7 @@ class ACCOUNT {
                 yield mongoose_1.default.connect(this.mongo_url, {}).then(() => {
                     console.log(`Connected To Mongodb Database ${mongoose_1.default.connection.host}`.bgMagenta
                         .white);
+                    mongoose_1.default.set('strictQuery', true);
                 });
             }
             catch (error) {

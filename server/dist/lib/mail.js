@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendDevice = exports.sendDeviceOTP = exports.accountCreated = exports.sendOTP = void 0;
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const otp_generator_1 = __importDefault(require("otp-generator"));
-const mail_1 = require("../src/Templates/mail");
+const mail_1 = require("../Templates/mail");
 class MAIL {
     constructor() {
         this.EMAIL = {

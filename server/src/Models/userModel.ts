@@ -20,7 +20,7 @@ interface IUser extends Document {
   password_reset_token?: string
   password_reset_expires?: Date
   verified: boolean
-  otp?: string
+  otp?: string | undefined
   otp_expiry_time?: Date
   otp_request_date?: Date
   otp_attempts?: number
@@ -195,8 +195,9 @@ userSchema.methods.correctPassword = async function (
 
 userSchema.methods.correctOTP = async function (
   candidateOTP: string,
-  userOTP: string,
+  userOTP: string | undefined,
 ): Promise<boolean> {
+  if (!userOTP) return false
   return await bcrypt.compare(candidateOTP, userOTP)
 }
 
