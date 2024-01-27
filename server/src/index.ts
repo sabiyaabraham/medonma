@@ -4,8 +4,8 @@ import http from 'http'
 import { Server } from 'socket.io'
 import 'colors'
 
-import { User } from './src/Models'
-import app from './src/server'
+import { User } from './Models'
+import app from './server'
 
 dotenv.config({ path: './config.env' })
 
@@ -24,7 +24,7 @@ const io: Server = new Server(server, {
 const port: number = Number(process.env.PORT) || 3000
 
 server.listen(port, async () => {
-  console.log(`App running on port = ${port} ...` .bgBlue.white)
+  console.log(`App running on port = ${port} ...`.bgBlue.white)
 
   try {
     // Fetch public IP using an external service

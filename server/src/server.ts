@@ -8,11 +8,10 @@ import cookieParser from 'cookie-parser'
 import session from 'cookie-session'
 import 'colors'
 
-
 const app: Application = express()
 
 app.use(cors())
-app.use(morgan("dev"));
+app.use(morgan('dev'))
 
 app.use(cookieParser())
 

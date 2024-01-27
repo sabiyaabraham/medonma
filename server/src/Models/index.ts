@@ -1,5 +1,5 @@
 import User from './userModel'
 import Device from './deviceModel'
-// import
+import Admin from './adminModel'
 
-export { User, Device }
+export { User, Device, Admin }

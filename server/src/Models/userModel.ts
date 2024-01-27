@@ -153,9 +153,10 @@ userSchema.pre<IUser>('save', async function (next) {
       // @ts-ignore
       this.otp_request_date = Date.now() + 24 * 60 * 60 * 1000 // 1 day from now
     } else {
-      this.otp_attempts = this.otp_attempts + 1
+      this.otp_attempts = this.otp_attempts ? this.otp_attempts + 1 : 1
     }
 
+    // @ts-ignore
     this.otp_expiry_time = Date.now() + 10 * 60 * 1000
   }
 
