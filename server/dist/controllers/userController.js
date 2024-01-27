@@ -1,4 +1,16 @@
 "use strict";
+/**
+ * @description      : user controller
+ * @author           : Sabiya Abraham
+ * @group            : Team MEDONMA
+ * @created          : 27/01/2024 - 13:49:23
+ *
+ * MODIFICATION LOG
+ * - Version         : 1.0.0
+ * - Date            : 27/01/2024
+ * - Author          : Sabiya Abraham
+ * - Modification    :
+ **/
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -46,47 +58,116 @@ const { create: create_, verify: verify_, reRequest: reRequest_, reSetUser: reSe
 // reRequestReSetPassword: reRequestReSetPassword_,
  } = authService;
 const { userInfo: userInfo_, updateInfo: updateInfo_, updatePic: updatePic_, removeProfile: removeProfile_, } = userService;
-// @ts-ignore
-exports.create = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return (0, handleResponse_1.default)(create_(req.body, req), res); }));
-// @ts-ignore
-exports.verify = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return (0, handleResponse_1.default)(verify_(req.body, req), res); }));
-// @ts-ignore
-exports.reRequest = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return (0, handleResponse_1.default)(reRequest_(req.body, req), res); }));
-// @ts-ignore
-exports.reSetUser = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return (0, handleResponse_1.default)(reSetUser_(req.body, req), res); }));
-// @ts-ignore
-exports.login = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return (0, handleResponse_1.default)(login_(req.body, req), res); }));
-// @ts-ignore
-exports.verifyLogin = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return (0, handleResponse_1.default)(verifyLogin_(req.body, req), res); }));
-exports.deviceResendOTP = (0, express_async_handler_1.default)(
-// @ts-ignore
-(req, res) => __awaiter(void 0, void 0, void 0, function* () { return (0, handleResponse_1.default)(deviceResendOTP_(req.body, req), res); }));
-// @ts-ignore
-exports.logoutDevice = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return (0, handleResponse_1.default)(logoutDevice_(req.body, req), res); }));
+/**
+ * Creates a new item
+ * @param req - The request object
+ * @param res - The response object
+ * @returns A promise with the result
+ */
+exports.create = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, handleResponse_1.default)(create_(req.body, req), res); }));
+/**
+ * Verify function
+ * @param {Request} req - The request object
+ * @param {Response} res - The response object
+ * @returns {Promise<any>} - The response promise
+ */
+exports.verify = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, handleResponse_1.default)(verify_(req.body, req), res); }));
+/**
+ * Asynchronous handler for reRequest function
+ *
+ * @param {Request} req - The request object
+ * @param {Response} res - The response object
+ * @returns {Promise<any>} - The asynchronous result
+ */
+exports.reRequest = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, handleResponse_1.default)(reRequest_(req.body, req), res); }));
+/**
+ * Handles the user reset functionality
+ *
+ * @param {Request} req - The request object
+ * @param {Response} res - The response object
+ * @returns {Promise<any>} A promise that resolves when the user reset is handled
+ */
+exports.reSetUser = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, handleResponse_1.default)(reSetUser_(req.body, req), res); }));
+/**
+ * Handles the login request
+ *
+ * @param req - the request object
+ * @param res - the response object
+ * @returns a promise with the response data
+ */
+exports.login = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { 
+// Await the response from the login_ function with the request body and request object as parameters, then handle the response using the handleResponse function
+return yield (0, handleResponse_1.default)(login_(req.body, req), res); }));
+/**
+ * Handles verification of login
+ * @param req - The request object
+ * @param res - The response object
+ * @returns A promise with the verification result
+ */
+exports.verifyLogin = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, handleResponse_1.default)(verifyLogin_(req.body, req), res); }));
+/**
+ * Resend OTP for a device
+ * @param req - the request object
+ * @param res - the response object
+ * @returns a promise with the result
+ */
+exports.deviceResendOTP = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, handleResponse_1.default)(deviceResendOTP_(req.body, req), res); }));
+/**
+ * Logout device handler
+ *
+ * @param req - the request object
+ * @param res - the response object
+ * @returns a Promise
+ */
+exports.logoutDevice = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, handleResponse_1.default)(logoutDevice_(req.body, req), res); }));
 // export const forgotPassword = asyncHandler(
-//   // @ts-ignore
-//   async (req: Request, res: Response) =>
+//
+//   async (req: Request, res: Response): Promise<any> =>
+//await
 //     handleResponse(forgotPassword_(req.body, req), res),
 // )
-// // @ts-ignore
+//
 // export const verifyForgotPassword = asyncHandler(
-//   async (req: Request, res: Response) =>
+//   async (req: Request, res: Response): Promise<any> =>
+//await
 //     handleResponse(verifyForgotPassword(req.body, req), res),
 // )
-// @ts-ignore
-// export const reSetPassword = asyncHandler(async (req: Request, res: Response) =>
+// export const reSetPassword = asyncHandler(async (req: Request, res: Response): Promise<any> =>
+//await
 //   handleResponse(reSetPassword_(req.body, req), res),
 // )
 // export const reRequestReSetPassword = asyncHandler(
-//   // @ts-ignore
-//   async (req: Request, res: Response) =>
+//
+//   async (req: Request, res: Response): Promise<any> =>
+//await
 //     handleResponse(reRequestReSetPassword_(req.body, req), res),
 // )
-// @ts-ignore
-exports.userInfo = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return (0, handleResponse_1.default)(userInfo_(req.body, req), res); }));
-// @ts-ignore
-exports.updateInfo = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return (0, handleResponse_1.default)(updateInfo_(req.body, req), res); }));
-// @ts-ignore
-exports.updatePic = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return (0, handleResponse_1.default)(updatePic_(req.body, req), res); }));
-// @ts-ignore
-exports.removeProfile = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return (0, handleResponse_1.default)(removeProfile_(req.body, req), res); }));
+/**
+ * Async handler for user information retrieval
+ *
+ * @param {Request} req - The request object
+ * @param {Response} res - The response object
+ * @returns {Promise<any>} The result of the user information retrieval
+ */
+exports.userInfo = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, handleResponse_1.default)(userInfo_(req.body, req), res); }));
+/**
+ * Updates the information
+ * @param req - The request object
+ * @param res - The response object
+ * @returns A promise with the updated information
+ */
+exports.updateInfo = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, handleResponse_1.default)(updateInfo_(req.body, req), res); }));
+/**
+ * Update profile picture
+ * @param req - The request object
+ * @param res - The response object
+ * @returns A promise with the updated picture
+ */
+exports.updatePic = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, handleResponse_1.default)(updatePic_(req.body, req), res); }));
+/**
+ * Handles the removal of a profile
+ * @param req - the request object
+ * @param res - the response object
+ * @returns a Promise with the result of the removal operation
+ */
+exports.removeProfile = (0, express_async_handler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { return yield (0, handleResponse_1.default)(removeProfile_(req.body, req), res); }));

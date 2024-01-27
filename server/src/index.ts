@@ -1,3 +1,15 @@
+/**
+    * @description      : Index 
+    * @author           : Sabiya Abraham
+    * @group            : Team MEDONMA
+    * @created          : 27/01/2024 - 14:29:41
+    * 
+    * MODIFICATION LOG
+    * - Version         : 1.0.0
+    * - Date            : 27/01/2024
+    * - Author          : Sabiya Abraham
+    * - Modification    : 
+**/
 import dotenv from 'dotenv'
 import axios from 'axios'
 import http from 'http'
@@ -7,7 +19,7 @@ import 'colors'
 import { User } from './Models'
 import app from './server'
 
-dotenv.config({ path: './config.env' })
+dotenv.config({ path: '../.env' })
 
 require('./lib/account')
 require('@ajayos/nodelog')

@@ -1,5 +1,17 @@
-import { Router } from 'express';
-import multer from 'multer';
+/**
+    * @description      : Auth Router
+    * @author           : Sabiya Abraham
+    * @group            : Team MEDONMA
+    * @created          : 27/01/2024 - 14:05:15
+    * 
+    * MODIFICATION LOG
+    * - Version         : 1.0.0
+    * - Date            : 27/01/2024
+    * - Author          : Sabiya Abraham
+    * - Modification    : 
+**/
+import { Router } from 'express'
+import multer from 'multer'
 import {
   create,
   verify,
@@ -13,26 +25,26 @@ import {
   updateInfo,
   updatePic,
   removeProfile,
-} from '../controllers/userController';
-import { protectUser } from '../middleware/authMiddleware';
+} from '../controllers/userController'
+import { protectUser } from '../middleware/authMiddleware'
 
-const storage = multer.memoryStorage(); // Use memory storage for multer
-const upload = multer({ storage });
-const router = Router();
+const storage = multer.memoryStorage() // Use memory storage for multer
+const upload = multer({ storage })
+const router = Router()
 
 router
   .route('/create')
   .get(create)
   .post(verify)
   .put(reRequest)
-  .delete(reSetUser);
+  .delete(reSetUser)
 
 router
   .route('/login')
   .get(login)
   .post(verifyLogin)
   .put(deviceResendOTP)
-  .delete(protectUser, logoutDevice);
+  .delete(protectUser, logoutDevice)
 
 // router
 //   .route('/forgot-password')
@@ -48,11 +60,11 @@ router
 router
   .route('/account')
   .get(protectUser, userInfo)
-  .post(protectUser, updateInfo);
+  .post(protectUser, updateInfo)
 
 router
   .route('/profile')
   .post(protectUser, upload.single('avatar'), updatePic)
-  .delete(protectUser, removeProfile);
+  .delete(protectUser, removeProfile)
 
-export default router;
+export default router

@@ -1,5 +1,5 @@
 export default async (username: string): Promise<string> => {
-    return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
   <html lang="en">
   <head>
       <meta charset="utf-8">
@@ -68,6 +68,5 @@ export default async (username: string): Promise<string> => {
       </div>
   </body>
   </html>
-  `;
-  };
-  
+  `
+}

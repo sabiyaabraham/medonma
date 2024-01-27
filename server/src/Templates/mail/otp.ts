@@ -1,5 +1,8 @@
-export default async (username: string, otp: number | string): Promise<string> => {
-    return `<!DOCTYPE html>
+export default async (
+  username: string,
+  otp: number | string,
+): Promise<string> => {
+  return `<!DOCTYPE html>
   <html lang="en">
   <head>
       <meta charset="UTF-8">
@@ -40,5 +43,5 @@ export default async (username: string, otp: number | string): Promise<string> =
       </table>
   </body>
   </html>
-  `;
-  };
+  `
+}

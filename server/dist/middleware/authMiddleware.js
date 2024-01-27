@@ -23,9 +23,10 @@ const JWT_SECRET = process.env.JWT_SECRET
 // @ts-ignore
 exports.protectUser = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+    if (req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')) {
         try {
-            const token = req.headers.authorization.split(" ")[1];
+            const token = req.headers.authorization.split(' ')[1];
             let decoded;
             try {
                 // Verify the authentication token
@@ -33,19 +34,19 @@ exports.protectUser = (0, express_async_handler_1.default)((req, res, next) => _
             }
             catch (error) {
                 // Handle JWT verification errors
-                if (error.name === "JsonWebTokenError") {
+                if (error.name === 'JsonWebTokenError') {
                     return res.status(400).json({
                         status: 400,
                         error: true,
-                        message: "Invalid token.",
+                        message: 'Invalid token.',
                         data: null,
                     });
                 }
-                if (error.name === "TokenExpiredError") {
+                if (error.name === 'TokenExpiredError') {
                     return res.status(400).json({
                         status: 400,
                         error: true,
-                        message: "Token has expired.",
+                        message: 'Token has expired.',
                         data: null,
                     });
                 }
@@ -53,8 +54,8 @@ exports.protectUser = (0, express_async_handler_1.default)((req, res, next) => _
                 return res.status(500).json({
                     status: 500,
                     error: true,
-                    message: "Internal Server Error",
-                    data: error.message || "",
+                    message: 'Internal Server Error',
+                    data: error.message || '',
                 });
             }
             const { id, email } = decoded;
@@ -76,7 +77,7 @@ exports.protectUser = (0, express_async_handler_1.default)((req, res, next) => _
             return res.status(401).json({
                 status: 401,
                 error: true,
-                message: "Not authorized, token failed",
+                message: 'Not authorized, token failed',
                 data: null,
             });
         }
@@ -85,7 +86,7 @@ exports.protectUser = (0, express_async_handler_1.default)((req, res, next) => _
         return res.status(401).json({
             status: 401,
             error: true,
-            message: "Not authorized, no token",
+            message: 'Not authorized, no token',
             data: null,
         });
     }
@@ -93,9 +94,10 @@ exports.protectUser = (0, express_async_handler_1.default)((req, res, next) => _
 // Authentication middleware for admins
 // @ts-ignore
 exports.protectAdmin = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+    if (req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')) {
         try {
-            const token = req.headers.authorization.split(" ")[1];
+            const token = req.headers.authorization.split(' ')[1];
             let decoded;
             try {
                 // Verify the authentication token
@@ -103,19 +105,19 @@ exports.protectAdmin = (0, express_async_handler_1.default)((req, res, next) => 
             }
             catch (error) {
                 // Handle JWT verification errors
-                if (error.name === "JsonWebTokenError") {
+                if (error.name === 'JsonWebTokenError') {
                     return res.status(400).json({
                         status: 400,
                         error: true,
-                        message: "Invalid token.",
+                        message: 'Invalid token.',
                         data: null,
                     });
                 }
-                if (error.name === "TokenExpiredError") {
+                if (error.name === 'TokenExpiredError') {
                     return res.status(400).json({
                         status: 400,
                         error: true,
-                        message: "Token has expired.",
+                        message: 'Token has expired.',
                         data: null,
                     });
                 }
@@ -123,8 +125,8 @@ exports.protectAdmin = (0, express_async_handler_1.default)((req, res, next) => 
                 return res.status(500).json({
                     status: 500,
                     error: true,
-                    message: "Internal Server Error",
-                    data: error.message || "",
+                    message: 'Internal Server Error',
+                    data: error.message || '',
                 });
             }
             const { id, email } = decoded;
@@ -137,7 +139,7 @@ exports.protectAdmin = (0, express_async_handler_1.default)((req, res, next) => 
                 return res.status(response.status).json(response);
             }
             else {
-                req.body["Auth"] = response.data;
+                req.body['Auth'] = response.data;
                 next();
             }
         }
@@ -145,7 +147,7 @@ exports.protectAdmin = (0, express_async_handler_1.default)((req, res, next) => 
             return res.status(401).json({
                 status: 401,
                 error: true,
-                message: "Not authorized, token failed",
+                message: 'Not authorized, token failed',
                 data: null,
             });
         }
@@ -154,7 +156,7 @@ exports.protectAdmin = (0, express_async_handler_1.default)((req, res, next) => 
         return res.status(401).json({
             status: 401,
             error: true,
-            message: "Not authorized, no token",
+            message: 'Not authorized, no token',
             data: null,
         });
     }

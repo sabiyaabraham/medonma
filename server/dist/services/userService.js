@@ -48,7 +48,7 @@ const userInfo = (data, req) => __awaiter(void 0, void 0, void 0, function* () {
         return {
             status: 200,
             error: false,
-            message: "User information.",
+            message: 'User information.',
             data: user,
         };
     }
@@ -57,7 +57,7 @@ const userInfo = (data, req) => __awaiter(void 0, void 0, void 0, function* () {
             status: 500,
             error: true,
             message: `Internal Server Error`,
-            data: { errorDetails: error.message || "" },
+            data: { errorDetails: error.message || '' },
         };
     }
 });
@@ -79,7 +79,7 @@ const updateInfo = (data, req) => __awaiter(void 0, void 0, void 0, function* ()
         if (protectInfo.error)
             return protectInfo;
         // Filter out unnecessary fields
-        const filteredBody = (0, filterObj_1.default)(data, "firstName", "lastName", "about", "dob", "age", "address");
+        const filteredBody = (0, filterObj_1.default)(data, 'firstName', 'lastName', 'about', 'dob', 'age', 'address');
         // @ts-ignore
         user.set(Object.assign({}, filteredBody));
         // @ts-ignore
@@ -87,7 +87,7 @@ const updateInfo = (data, req) => __awaiter(void 0, void 0, void 0, function* ()
         return {
             status: 200,
             error: false,
-            message: "User information updated.",
+            message: 'User information updated.',
             data: Object.assign({}, user),
         };
     }
@@ -96,7 +96,7 @@ const updateInfo = (data, req) => __awaiter(void 0, void 0, void 0, function* ()
             status: 500,
             error: true,
             message: `Internal Server Error`,
-            data: { errorDetails: error.message || "" },
+            data: { errorDetails: error.message || '' },
         };
     }
 });
@@ -144,14 +144,17 @@ const updatePic = (data, req) => __awaiter(void 0, void 0, void 0, function* () 
             return {
                 status: 200,
                 error: false,
-                message: "Profile updated!",
-                data: { avatar: `data:image/${fileExtension};base64,${base64Image}`, extension: fileExtension },
+                message: 'Profile updated!',
+                data: {
+                    avatar: `data:image/${fileExtension};base64,${base64Image}`,
+                    extension: fileExtension,
+                },
             };
         }
         return {
             status: 200,
             error: false,
-            message: "No profile given",
+            message: 'No profile given',
             data: null,
         };
     }
@@ -161,7 +164,7 @@ const updatePic = (data, req) => __awaiter(void 0, void 0, void 0, function* () 
             status: 500,
             error: true,
             message: `Internal Server Error`,
-            data: { errorDetails: error.message || "" },
+            data: { errorDetails: error.message || '' },
         };
     }
 });
@@ -182,7 +185,7 @@ const removeProfile = (data, req) => __awaiter(void 0, void 0, void 0, function*
         const protectInfo = yield (0, protect_1.default)(user);
         if (protectInfo.error)
             return protectInfo;
-        const avatar = "aa.jpeg";
+        const avatar = 'aa.jpeg';
         // @ts-ignore
         user.avatar = avatar;
         // @ts-ignore
@@ -190,7 +193,7 @@ const removeProfile = (data, req) => __awaiter(void 0, void 0, void 0, function*
         return {
             status: 200,
             error: false,
-            message: "Profile updated!",
+            message: 'Profile updated!',
             data: { avatar: avatar },
         };
     }
@@ -199,7 +202,7 @@ const removeProfile = (data, req) => __awaiter(void 0, void 0, void 0, function*
             status: 500,
             error: true,
             message: `Internal Server Error`,
-            data: { errorDetails: error.message || "" },
+            data: { errorDetails: error.message || '' },
         };
     }
 });

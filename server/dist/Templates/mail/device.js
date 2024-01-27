@@ -12,23 +12,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = (username, device) => __awaiter(void 0, void 0, void 0, function* () {
     const timestamp = Date.now();
     const date = new Date(timestamp);
-    const location = device.timeZone || "Asia/Kolkata"; // Replace with the actual location (timezone)
+    const location = device.timeZone || 'Asia/Kolkata'; // Replace with the actual location (timezone)
     const options = {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
         hour12: true,
         timeZone: location,
-        timeZoneName: "short",
+        timeZoneName: 'short',
     };
-    const formattedDate = date.toLocaleString("en-US", options);
-    const [datePart, timePart] = formattedDate.split(", ");
-    const [month, day, year] = datePart.split("/");
-    const [time, amPm, timeZone] = timePart.split(" ");
-    const [hour, minute, second] = time.split(":");
+    const formattedDate = date.toLocaleString('en-US', options);
+    const [datePart, timePart] = formattedDate.split(', ');
+    const [month, day, year] = datePart.split('/');
+    const [time, amPm, timeZone] = timePart.split(' ');
+    const [hour, minute, second] = time.split(':');
     const finalFormattedDate = `${day}/${month}/${year} ${hour}:${minute}:${second} ${amPm} ${timeZone}`;
     return `<!DOCTYPE html>
   <html lang="en">

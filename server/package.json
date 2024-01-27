@@ -4,9 +4,9 @@
   "description": "MEDONMA LIFE CARE",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc && typedoc",
+    "build": "prettier --write \"**/**/*.{js,ts,json,css,md}\" && tsc && typedoc",
     "start": "node dist/index.js",
-    "test": "npm run dev:prettier && ts-node src/index.ts",
+    "test": "ts-node src/index.ts",
     "dev:format": "prettier --write .",
     "dev:prettier": "prettier --write \"**/**/*.{js,ts,json,css,md}\"",
     "post:install": "npm run dev:prettier && npm run dev:format && npx tsc"

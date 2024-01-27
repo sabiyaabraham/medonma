@@ -1,30 +1,30 @@
 export default async (username: string, device: any): Promise<string> => {
-    const timestamp: number = Date.now();
-    const date: Date = new Date(timestamp);
-  
-    const location: string = device.timeZone || "Asia/Kolkata"; // Replace with the actual location (timezone)
-  
-    const options: Intl.DateTimeFormatOptions = {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: true,
-      timeZone: location,
-      timeZoneName: "short",
-    };
-  
-    const formattedDate: string = date.toLocaleString("en-US", options);
-  
-    const [datePart, timePart] = formattedDate.split(", ");
-    const [month, day, year] = datePart.split("/");
-    const [time, amPm, timeZone] = timePart.split(" ");
-    const [hour, minute, second] = time.split(":");
-    const finalFormattedDate: string = `${day}/${month}/${year} ${hour}:${minute}:${second} ${amPm} ${timeZone}`;
-  
-    return `<!DOCTYPE html>
+  const timestamp: number = Date.now()
+  const date: Date = new Date(timestamp)
+
+  const location: string = device.timeZone || 'Asia/Kolkata' // Replace with the actual location (timezone)
+
+  const options: Intl.DateTimeFormatOptions = {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true,
+    timeZone: location,
+    timeZoneName: 'short',
+  }
+
+  const formattedDate: string = date.toLocaleString('en-US', options)
+
+  const [datePart, timePart] = formattedDate.split(', ')
+  const [month, day, year] = datePart.split('/')
+  const [time, amPm, timeZone] = timePart.split(' ')
+  const [hour, minute, second] = time.split(':')
+  const finalFormattedDate: string = `${day}/${month}/${year} ${hour}:${minute}:${second} ${amPm} ${timeZone}`
+
+  return `<!DOCTYPE html>
   <html lang="en">
   <head>
       <meta charset="utf-8">
@@ -72,6 +72,5 @@ export default async (username: string, device: any): Promise<string> => {
           </tr>
       </table>
   </body>
-  </html>`;
-  };
-  
+  </html>`
+}

@@ -1,3 +1,15 @@
+/**
+    * @description      : Mail manager
+    * @author           : Sabiya Abraham
+    * @group            : Team MEDONMA
+    * @created          : 27/01/2024 - 14:05:15
+    * 
+    * MODIFICATION LOG
+    * - Version         : 1.0.0
+    * - Date            : 27/01/2024
+    * - Author          : Sabiya Abraham
+    * - Modification    : 
+**/
 import nodemailer from 'nodemailer'
 import otpGenerator from 'otp-generator'
 import { otp, created, device_otp, device_login } from '../Templates/mail'

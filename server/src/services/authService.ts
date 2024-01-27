@@ -13,17 +13,17 @@ import filterObj from '../lib/filterObj'
 import MAIL from '../lib/mail'
 import { User, Device, Admin } from '../Models'
 import protect from '../utils/protect'
-import { Request } from 'express';
+import { Request } from 'express'
 
 const JWT_SECRET: string = process.env.JWT_SECRET
   ? process.env.JWT_SECRET
   : 'medonma'
 
-  interface DecodedToken {
-    id: string;
-    email: string;
-  }
-  
+interface DecodedToken {
+  id: string
+  email: string
+}
+
 const signToken = (id: string, email: string): string =>
   jwt.sign({ id, email }, JWT_SECRET, {
     expiresIn: '30d', // Token expires in 30 days
@@ -41,7 +41,7 @@ interface CreateResponse {
   status: number
   error: boolean
   message: string
-  data: { email?: string, errorDetails?: any } | null
+  data: { email?: string; errorDetails?: any } | null
 }
 
 /**
@@ -72,7 +72,10 @@ interface CreateResponse {
  * const result: CreateResponse = await create(userData);
  * console.log(result);
  */
-export const create = async (data: CreateUserData, req:Request): Promise<CreateResponse> => {
+export const create = async (
+  data: CreateUserData,
+  req: Request,
+): Promise<CreateResponse> => {
   try {
     const { firstName, lastName, email } = data
 
@@ -259,7 +262,10 @@ interface VerifyResponse {
   data: null
 }
 
-export const verify = async (data: VerifyData, req: Request): Promise<VerifyResponse> => {
+export const verify = async (
+  data: VerifyData,
+  req: Request,
+): Promise<VerifyResponse> => {
   try {
     // Destructure data for easier access
     const { email, otp } = data
@@ -374,7 +380,7 @@ interface ReRequestResponse {
   status: number
   error: boolean
   message: string
-  data: { email?: string, errorDetails?: any } | null
+  data: { email?: string; errorDetails?: any } | null
 }
 
 export const reRequest = async (
@@ -578,7 +584,10 @@ interface LoginResponse {
   data: { token: string; email: string } | null
 }
 
-export const login = async (data: LoginData, req: Request): Promise<LoginResponse> => {
+export const login = async (
+  data: LoginData,
+  req: Request,
+): Promise<LoginResponse> => {
   try {
     const { email, password, deviceData } = data
 
@@ -921,7 +930,7 @@ interface DeviceResendOTPResponse {
   status: number
   error: boolean
   message: string
-  data: { email?: string, errorDetails?: any } | null
+  data: { email?: string; errorDetails?: any } | null
 }
 
 export const deviceResendOTP = async (
