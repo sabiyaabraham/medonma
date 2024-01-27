@@ -20,7 +20,6 @@ const JWT_SECRET = process.env.JWT_SECRET
     ? process.env.JWT_SECRET
     : 'medonma';
 // Authentication middleware for users
-// @ts-ignore
 exports.protectUser = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     if (req.headers.authorization &&
@@ -92,7 +91,6 @@ exports.protectUser = (0, express_async_handler_1.default)((req, res, next) => _
     }
 }));
 // Authentication middleware for admins
-// @ts-ignore
 exports.protectAdmin = (0, express_async_handler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.headers.authorization &&
         req.headers.authorization.startsWith('Bearer')) {

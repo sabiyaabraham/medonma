@@ -3,6 +3,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * @description      : Auth Router
+ * @author           : Sabiya Abraham
+ * @group            : Team MEDONMA
+ * @created          : 27/01/2024 - 14:05:15
+ *
+ * MODIFICATION LOG
+ * - Version         : 1.0.0
+ * - Date            : 27/01/2024
+ * - Author          : Sabiya Abraham
+ * - Modification    :
+ **/
 const express_1 = require("express");
 const multer_1 = __importDefault(require("multer"));
 const userController_1 = require("../controllers/userController");

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "prettier --write \"**/**/*.{js,ts,json,css,md}\" && tsc && typedoc",
     "start": "node dist/index.js",
-    "test": "ts-node src/index.ts",
+    "test": "npx tsc && ts-node src/index.ts",
     "dev:format": "prettier --write .",
     "dev:prettier": "prettier --write \"**/**/*.{js,ts,json,css,md}\"",
     "post:install": "npm run dev:prettier && npm run dev:format && npx tsc"

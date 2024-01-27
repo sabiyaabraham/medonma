@@ -1,15 +1,15 @@
 /**
-    * @description      : Device Model
-    * @author           : Sabiya Abraham
-    * @group            : Team MEDONMA
-    * @created          : 27/01/2024 - 14:05:15
-    * 
-    * MODIFICATION LOG
-    * - Version         : 1.0.0
-    * - Date            : 27/01/2024
-    * - Author          : Sabiya Abraham
-    * - Modification    : 
-**/
+ * @description      : Device Model
+ * @author           : Sabiya Abraham
+ * @group            : Team MEDONMA
+ * @created          : 27/01/2024 - 14:05:15
+ *
+ * MODIFICATION LOG
+ * - Version         : 1.0.0
+ * - Date            : 27/01/2024
+ * - Author          : Sabiya Abraham
+ * - Modification    :
+ **/
 import mongoose, { Document, Schema, Model } from 'mongoose'
 import bcrypt from 'bcryptjs'
 

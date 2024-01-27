@@ -1,3 +1,15 @@
+/**
+ * @description      :
+ * @author           :
+ * @group            :
+ * @created          : 27/01/2024 - 15:42:31
+ *
+ * MODIFICATION LOG
+ * - Version         : 1.0.0
+ * - Date            : 27/01/2024
+ * - Author          :
+ * - Modification    :
+ **/
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
 import { promisify } from 'util'
@@ -77,17 +89,18 @@ export const create = async (
   req: Request,
 ): Promise<CreateResponse> => {
   try {
-    const { firstName, lastName, email } = data
-
     // Filter out unnecessary fields
     const filteredBody = filterObj(
-      data,
+      req.query,
       'firstName',
       'lastName',
       'email',
+      'dob',
+      'age',
       'password',
       'phoneNumber',
     )
+    const { firstName, lastName, email } = filteredBody
 
     // Check if the user with the given email already exists
     const existingUser = await User.findOne({ email: email })
@@ -98,7 +111,7 @@ export const create = async (
         // User already verified
         return {
           status: 200,
-          error: false,
+          error: true,
           message: 'Email already in use, Please login.',
           data: { email },
         }
@@ -589,7 +602,14 @@ export const login = async (
   req: Request,
 ): Promise<LoginResponse> => {
   try {
-    const { email, password, deviceData } = data
+    const filteredBody = filterObj(
+      req.query,
+      'email',
+      'password',
+      'deviceData',
+    )
+    console.log("data", filteredBody)
+    const { email, password, deviceData } = filteredBody
 
     // Check if the user exists
     const user = await User.findOne({ email }).select('+password')

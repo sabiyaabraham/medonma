@@ -1,15 +1,15 @@
 /**
-    * @description      : Mail manager
-    * @author           : Sabiya Abraham
-    * @group            : Team MEDONMA
-    * @created          : 27/01/2024 - 14:05:15
-    * 
-    * MODIFICATION LOG
-    * - Version         : 1.0.0
-    * - Date            : 27/01/2024
-    * - Author          : Sabiya Abraham
-    * - Modification    : 
-**/
+ * @description      : Mail manager
+ * @author           : Sabiya Abraham
+ * @group            : Team MEDONMA
+ * @created          : 27/01/2024 - 14:05:15
+ *
+ * MODIFICATION LOG
+ * - Version         : 1.0.0
+ * - Date            : 27/01/2024
+ * - Author          : Sabiya Abraham
+ * - Modification    :
+ **/
 import nodemailer from 'nodemailer'
 import otpGenerator from 'otp-generator'
 import { otp, created, device_otp, device_login } from '../Templates/mail'
@@ -35,7 +35,7 @@ class MAIL {
   ): Promise<any> {
     try {
       const info = await this.transporter.sendMail({
-        from: `"🧑‍‍‍‍‍‍‍🏻 KEERTHANA 🤖" <${this.EMAIL.user}>`,
+        from: `"🧑‍‍‍‍‍‍‍🏻 MEDONMA 🤖" <${this.EMAIL.user}>`,
         to: email,
         subject: subject,
         text: 'CODE NOT SUPPORTED',
@@ -73,7 +73,7 @@ export const sendOTP = async (name: string, email: string): Promise<any> => {
 
     const mailSendResult = await mail.sendMail(
       email,
-      `[KEERTHANA] OTP for create your account: ${username}`,
+      `[ MEDONMA ] OTP for create your account: ${username}`,
       content,
     )
 
@@ -104,7 +104,7 @@ export const accountCreated = async (
 
     const mailSendResult = await mail.sendMail(
       email,
-      `[KEERTHANA] Account Created Successfully`,
+      `[MEDONMA] Account Created Successfully`,
       content,
     )
 
@@ -142,7 +142,7 @@ export const sendDeviceOTP = async (
 
     const mailSendResult = await mail.sendMail(
       email,
-      `[KEERTHANA] - OTP for New Device`,
+      `[MEDONMA] - OTP for New Device`,
       content,
     )
 
@@ -175,7 +175,7 @@ export const sendDevice = async (
 
     const mailSendResult = await mail.sendMail(
       email,
-      `[KEERTHANA] - New Device Login`,
+      `[MEDONMA] - New Device Login`,
       content,
     )
 

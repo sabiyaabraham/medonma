@@ -1,15 +1,15 @@
 /**
-    * @description      : Account manager
-    * @author           : Sabiya Abraham
-    * @group            : Team MEDONMA
-    * @created          : 27/01/2024 - 14:05:15
-    * 
-    * MODIFICATION LOG
-    * - Version         : 1.0.0
-    * - Date            : 27/01/2024
-    * - Author          : Sabiya Abraham
-    * - Modification    : 
-**/
+ * @description      : Account manager
+ * @author           : Sabiya Abraham
+ * @group            : Team MEDONMA
+ * @created          : 27/01/2024 - 14:05:15
+ *
+ * MODIFICATION LOG
+ * - Version         : 1.0.0
+ * - Date            : 27/01/2024
+ * - Author          : Sabiya Abraham
+ * - Modification    :
+ **/
 import mongoose from 'mongoose'
 import 'colors'
 // Define the ACCOUNT class
@@ -38,7 +38,6 @@ class ACCOUNT {
 
   // Method to connect to the MongoDB database
   async connect(): Promise<void> {
-    console.log(this.USER, this.mongo_url)
     try {
       // Connect to the MongoDB database using the constructed URL
       await mongoose.connect(this.mongo_url, {}).then(() => {

@@ -1,15 +1,15 @@
 /**
-    * @description      : Auth Middleware
-    * @author           : Sabiya Abraham
-    * @group            : Team MEDONMA
-    * @created          : 27/01/2024 - 14:05:15
-    * 
-    * MODIFICATION LOG
-    * - Version         : 1.0.0
-    * - Date            : 27/01/2024
-    * - Author          : Sabiya Abraham
-    * - Modification    : 
-**/
+ * @description      : Auth Middleware
+ * @author           : Sabiya Abraham
+ * @group            : Team MEDONMA
+ * @created          : 27/01/2024 - 14:05:15
+ *
+ * MODIFICATION LOG
+ * - Version         : 1.0.0
+ * - Date            : 27/01/2024
+ * - Author          : Sabiya Abraham
+ * - Modification    :
+ **/
 import { Request, Response, NextFunction } from 'express'
 import asyncHandler from 'express-async-handler'
 import {
@@ -107,7 +107,7 @@ export const protectUser = asyncHandler(
 
 // Authentication middleware for admins
 export const protectAdmin = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction): Promise<any>  => {
+  async (req: Request, res: Response, next: NextFunction): Promise<any> => {
     if (
       req.headers.authorization &&
       req.headers.authorization.startsWith('Bearer')

@@ -1,25 +1,27 @@
 /**
-    * @description      : Index 
-    * @author           : Sabiya Abraham
-    * @group            : Team MEDONMA
-    * @created          : 27/01/2024 - 14:29:41
-    * 
-    * MODIFICATION LOG
-    * - Version         : 1.0.0
-    * - Date            : 27/01/2024
-    * - Author          : Sabiya Abraham
-    * - Modification    : 
-**/
+ * @description      : Index
+ * @author           : Sabiya Abraham
+ * @group            : Team MEDONMA
+ * @created          : 27/01/2024 - 14:29:41
+ *
+ * MODIFICATION LOG
+ * - Version         : 1.0.0
+ * - Date            : 27/01/2024
+ * - Author          : Sabiya Abraham
+ * - Modification    :
+ **/
 import dotenv from 'dotenv'
 import axios from 'axios'
 import http from 'http'
+import path from 'path'
 import { Server } from 'socket.io'
 import 'colors'
 
 import { User } from './Models'
 import app from './server'
 
-dotenv.config({ path: '../.env' })
+const envPath = path.join(__dirname, '..', 'config.env')
+dotenv.config({ path: envPath })
 
 require('./lib/account')
 require('@ajayos/nodelog')
@@ -33,7 +35,7 @@ const io: Server = new Server(server, {
   },
 })
 
-const port: number = Number(process.env.PORT) || 3000
+const port: number = Number(process.env.PORT) || 3001
 
 server.listen(port, async () => {
   console.log(`App running on port = ${port} ...`.bgBlue.white)

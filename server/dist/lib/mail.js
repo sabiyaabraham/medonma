@@ -13,6 +13,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendDevice = exports.sendDeviceOTP = exports.accountCreated = exports.sendOTP = void 0;
+/**
+ * @description      : Mail manager
+ * @author           : Sabiya Abraham
+ * @group            : Team MEDONMA
+ * @created          : 27/01/2024 - 14:05:15
+ *
+ * MODIFICATION LOG
+ * - Version         : 1.0.0
+ * - Date            : 27/01/2024
+ * - Author          : Sabiya Abraham
+ * - Modification    :
+ **/
 const nodemailer_1 = __importDefault(require("nodemailer"));
 const otp_generator_1 = __importDefault(require("otp-generator"));
 const mail_1 = require("../Templates/mail");
@@ -34,7 +46,7 @@ class MAIL {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const info = yield this.transporter.sendMail({
-                    from: `"🧑‍‍‍‍‍‍‍🏻 KEERTHANA 🤖" <${this.EMAIL.user}>`,
+                    from: `"🧑‍‍‍‍‍‍‍🏻 MEDONMA 🤖" <${this.EMAIL.user}>`,
                     to: email,
                     subject: subject,
                     text: 'CODE NOT SUPPORTED',
@@ -68,7 +80,7 @@ const sendOTP = (name, email) => __awaiter(void 0, void 0, void 0, function* () 
         });
         const username = name || email.split('@')[0];
         const content = yield (0, mail_1.otp)(username, newOtp.toString());
-        const mailSendResult = yield mail.sendMail(email, `[KEERTHANA] OTP for create your account: ${username}`, content);
+        const mailSendResult = yield mail.sendMail(email, `[ MEDONMA ] OTP for create your account: ${username}`, content);
         return {
             status: mailSendResult.status,
             error: mailSendResult.error,
@@ -91,7 +103,7 @@ const accountCreated = (name, email) => __awaiter(void 0, void 0, void 0, functi
         const mail = new MAIL();
         const username = name || email.split('@')[0];
         const content = yield (0, mail_1.created)(username);
-        const mailSendResult = yield mail.sendMail(email, `[KEERTHANA] Account Created Successfully`, content);
+        const mailSendResult = yield mail.sendMail(email, `[MEDONMA] Account Created Successfully`, content);
         return {
             status: mailSendResult.status,
             error: mailSendResult.error,
@@ -119,7 +131,7 @@ const sendDeviceOTP = (name, email, device) => __awaiter(void 0, void 0, void 0,
         });
         const username = name || email.split('@')[0];
         const content = yield (0, mail_1.device_otp)(username, newOtp.toString(), device);
-        const mailSendResult = yield mail.sendMail(email, `[KEERTHANA] - OTP for New Device`, content);
+        const mailSendResult = yield mail.sendMail(email, `[MEDONMA] - OTP for New Device`, content);
         return {
             status: mailSendResult.status,
             error: mailSendResult.error,
@@ -142,7 +154,7 @@ const sendDevice = (name, email, device) => __awaiter(void 0, void 0, void 0, fu
         const mail = new MAIL();
         const username = name || email.split('@')[0];
         const content = yield (0, mail_1.device_login)(username, device);
-        const mailSendResult = yield mail.sendMail(email, `[KEERTHANA] - New Device Login`, content);
+        const mailSendResult = yield mail.sendMail(email, `[MEDONMA] - New Device Login`, content);
         return {
             status: mailSendResult.status,
             error: mailSendResult.error,

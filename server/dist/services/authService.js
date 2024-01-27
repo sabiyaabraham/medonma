@@ -13,6 +13,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.forgotPassword = exports.protectAdmin = exports.protectUser = exports.logoutDevice = exports.deviceResendOTP = exports.verifyLogin = exports.login = exports.reSetUser = exports.reRequest = exports.verify = exports.create = void 0;
+/**
+ * @description      :
+ * @author           :
+ * @group            :
+ * @created          : 27/01/2024 - 15:42:31
+ *
+ * MODIFICATION LOG
+ * - Version         : 1.0.0
+ * - Date            : 27/01/2024
+ * - Author          :
+ * - Modification    :
+ **/
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const unique_names_generator_1 = require("unique-names-generator");
 const filterObj_1 = __importDefault(require("../lib/filterObj"));
@@ -55,9 +67,9 @@ const signToken = (id, email) => jsonwebtoken_1.default.sign({ id, email }, JWT_
  */
 const create = (data, req) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { firstName, lastName, email } = data;
         // Filter out unnecessary fields
-        const filteredBody = (0, filterObj_1.default)(data, 'firstName', 'lastName', 'email', 'password', 'phoneNumber');
+        const filteredBody = (0, filterObj_1.default)(req.query, 'firstName', 'lastName', 'email', 'dob', 'age', 'password', 'phoneNumber');
+        const { firstName, lastName, email } = filteredBody;
         // Check if the user with the given email already exists
         const existingUser = yield Models_1.User.findOne({ email: email });
         if (existingUser) {
@@ -66,7 +78,7 @@ const create = (data, req) => __awaiter(void 0, void 0, void 0, function* () {
                 // User already verified
                 return {
                     status: 200,
-                    error: false,
+                    error: true,
                     message: 'Email already in use, Please login.',
                     data: { email },
                 };
@@ -366,7 +378,9 @@ const reSetUser = (data, req) => __awaiter(void 0, void 0, void 0, function* () 
 exports.reSetUser = reSetUser;
 const login = (data, req) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { email, password, deviceData } = data;
+        const filteredBody = (0, filterObj_1.default)(req.query, 'email', 'password', 'deviceData');
+        console.log("data", filteredBody);
+        const { email, password, deviceData } = filteredBody;
         // Check if the user exists
         const user = yield Models_1.User.findOne({ email }).select('+password');
         if (!user) {
