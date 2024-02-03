@@ -11,9 +11,11 @@
     * - Modification    : 
 **/
 import { useRoutes } from "react-router-dom";
+// eslint-disable-next-line
 import React, { lazy } from "react";
 
 // project imports
+// eslint-disable-next-line
 import Loadable from "../components/Loadable";
 import Navbar from "../Navbar";
 // routes]
