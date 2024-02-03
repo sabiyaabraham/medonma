@@ -1,3 +1,15 @@
+/**
+    * @description      : 
+    * @author           : 
+    * @group            : 
+    * @created          : 03/02/2024 - 12:48:52
+    * 
+    * MODIFICATION LOG
+    * - Version         : 1.0.0
+    * - Date            : 03/02/2024
+    * - Author          : 
+    * - Modification    : 
+**/
 import React from 'react';
 import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
 
@@ -6,6 +18,8 @@ const Navbar = () => {
     <>
     <Box
     style={{
+      justifyContent: "space-between",
+      p: 1,
       backgroundColor: 'blue',
       backgroundPosition: 'center',
       display: 'flex',
@@ -45,9 +59,9 @@ const Navbar = () => {
       </AppBar>
       
     </Box>
-    <Typography variant="h2" component="div" sx={{ flexGrow: 1 }} align='center'>
+    {/* <Typography variant="h2" component="div" sx={{ flexGrow: 1 }} align='center'>
     MEDONMA LIFE CARE
-  </Typography>
+  </Typography> */}
   </>
   );
 }

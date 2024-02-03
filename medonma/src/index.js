@@ -18,8 +18,8 @@ import reportWebVitals from "./reportWebVitals";
 
 import { SnackbarProvider } from "notistack";
 
-import HelmetProviderMode from "contexts/HelmetContext";
-import Router from "./App";
+import {HelmetProvider as HelmetProviderMode} from "./contexts/HelmetContext";
+import Router from "./Router";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

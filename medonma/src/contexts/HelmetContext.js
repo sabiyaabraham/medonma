@@ -1,3 +1,15 @@
+/**
+    * @description      : 
+    * @author           : 
+    * @group            : 
+    * @created          : 03/02/2024 - 12:58:33
+    * 
+    * MODIFICATION LOG
+    * - Version         : 1.0.0
+    * - Date            : 03/02/2024
+    * - Author          : 
+    * - Modification    : 
+**/
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 
@@ -27,7 +39,7 @@ export const HelmetProvider = ({ children }) => {
   }, []);
 
   return (
-    <helmetContext.Provider value={{ setTitle, setDescription, setIcon }}>
+    <helmetContext.Provider value={{ setTitle, setDescription }}>
       <>
         <Helmet>
           <title>{`${focus ? " " + title : " Offline :) | "}`}</title>
