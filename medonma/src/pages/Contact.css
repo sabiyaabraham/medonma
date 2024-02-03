@@ -1,0 +1,27 @@
+/* ContactPage.css */
+
+header {
+    margin-bottom: 20px;
+  }
+  
+  main {
+    text-align: left;
+  }
+  
+  section {
+    margin-bottom: 30px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 10px;
+  }
+  
+  h5 {
+    margin-bottom: 10px;
+  }
+  

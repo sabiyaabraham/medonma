@@ -1,17 +1,44 @@
+/**
+    * @description      : Index.js
+    * @author           : Sreehari k p, Sabiya Abraham
+    * @group            : Team MEDONMA
+    * @created          : 03/02/2024 - 11:34:30
+    * 
+    * MODIFICATION LOG
+    * - Version         : 1.0.0
+    * - Date            : 03/02/2024
+    * - Author          : Sreehari k p, Sabiya Abraham
+    * - Modification    : create
+**/
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
+import { HelmetProvider } from "react-helmet-async";
+import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 
+import { SnackbarProvider } from "notistack";
+
+import HelmetProviderMode from "contexts/HelmetContext";
+import Router from "./App";
+
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <HelmetProvider>
+      <HelmetProviderMode>
+      <BrowserRouter>
+        <SnackbarProvider
+          maxSnack={3}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
+          <Router />
+        </SnackbarProvider>
+      </BrowserRouter>
+      </HelmetProviderMode>
+    </HelmetProvider>
+  </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
