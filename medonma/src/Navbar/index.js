@@ -1,6 +1,6 @@
 import React from "react";
+// eslint-disable-next-line
 import { AppBar, Box, Button, IconButton, Toolbar, Typography } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu"; // Import MenuIcon or your preferred icon
 
 const Navbar = () => {
   return (
