@@ -1,40 +1,51 @@
 /**
-    * @description      : 
-    * @author           : 
-    * @group            : 
-    * @created          : 03/02/2024 - 12:52:01
-    * 
-    * MODIFICATION LOG
-    * - Version         : 1.0.0
-    * - Date            : 03/02/2024
-    * - Author          : 
-    * - Modification    : 
-**/
-import { useRoutes } from "react-router-dom";
-// eslint-disable-next-line
-import React, { lazy } from "react";
+ * @description      : Main routing configuration for the application
+ * @author           :
+ * @group            :
+ * @created          : 03/02/2024 - 17:52:52
+ *
+ * MODIFICATION LOG
+ * - Version         : 1.0.0
+ * - Date            : 03/02/2024
+ * - Author          :
+ * - Modification    :
+ **/
 
-// project imports
-// eslint-disable-next-line
-import Loadable from "../components/Loadable";
+import React from "react";
+import { Navigate, useRoutes } from "react-router-dom";
+
+// Import components/pages
 import Navbar from "../Navbar";
-// routes]
-// ==============================|| ROUTING RENDER ||============================== //
+import Loadable from "../components/Loadable";
 
-// maintenance routing
-// const MaintenanceError = Loadable(
-//   lazy(() => import("views/pages/maintenance/Error"))
-// );
+// Lazy-loaded components
+const Login = Loadable(() => import("../pages/Auth/Login"));
 
-export default function ThemeRoutes() {
+const Home = Loadable(() => import("../pages/Home/Home"));
+
+// ==============================|| ROUTING COMPONENT ||============================== //
+
+const ThemeRoutes = () => {
   return useRoutes([
-    // LoginRoutes,
-    // DashboardRoutes,
-    // ServerRoutes,
     {
-      // Wildcard route for unmatched paths
-      path: "*",
-      element: <Navbar />,
+      path: "/",
+      children: [
+        { element: <Navigate to="/home" replace />, index: true },
+        {
+          path: "login",
+          element: <Login />,
+        },
+        {
+          path: "home",
+          element: <Home />,
+        },
+      ],
+    },
+    {
+      path: "/error",
+      // element: <Navbar />,
     },
   ]);
-}
+};
+
+export default ThemeRoutes;

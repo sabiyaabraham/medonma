@@ -1,30 +1,27 @@
 /**
-    * @description      : Index.js
-    * @author           : Sreehari k p, Sabiya Abraham
-    * @group            : Team MEDONMA
-    * @created          : 03/02/2024 - 11:34:30
-    * 
-    * MODIFICATION LOG
-    * - Version         : 1.0.0
-    * - Date            : 03/02/2024
-    * - Author          : Sreehari k p, Sabiya Abraham
-    * - Modification    : create
-**/
+ * @description      : Index.js
+ * @author           : Sreehari k p, Sabiya Abraham
+ * @group            : Team MEDONMA
+ * @created          : 03/02/2024 - 11:34:30
+ *
+ * MODIFICATION LOG
+ * - Version         : 1.0.0
+ * - Date            : 03/02/2024
+ * - Author          : Sreehari k p, Sabiya Abraham
+ * - Modification    : create
+ **/
 import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom/client"; // Change the import statement
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 
 import { SnackbarProvider } from "notistack";
 
-import {HelmetProvider as HelmetProviderMode} from "./contexts/HelmetContext";
+import { HelmetProvider as HelmetProviderMode } from "./contexts/HelmetContext";
 import Router from "./Router";
 
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-
-root.render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <HelmetProvider>
       <HelmetProviderMode>
@@ -38,7 +35,7 @@ root.render(
       </BrowserRouter>
       </HelmetProviderMode>
     </HelmetProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 reportWebVitals();

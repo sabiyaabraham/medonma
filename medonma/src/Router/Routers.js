@@ -1,15 +1,15 @@
 /**
-    * @description      : Index.js
-    * @author           : Sreehari k p, Sabiya Abraham
-    * @group            : Team MEDONMA
-    * @created          : 03/02/2024 - 11:34:30
-    * 
-    * MODIFICATION LOG
-    * - Version         : 1.0.0
-    * - Date            : 03/02/2024
-    * - Author          : Sreehari k p, Sabiya Abraham
-    * - Modification    : create
-**/
+ * @description      : Index.js
+ * @author           : Sreehari k p, Sabiya Abraham
+ * @group            : Team MEDONMA
+ * @created          : 03/02/2024 - 11:34:30
+ *
+ * MODIFICATION LOG
+ * - Version         : 1.0.0
+ * - Date            : 03/02/2024
+ * - Author          : Sreehari k p, Sabiya Abraham
+ * - Modification    : create
+ **/
 import { Suspense, lazy } from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 
@@ -38,7 +38,7 @@ export default function Router() {
         { path: "register", element: <RegisterPage /> },
         { path: "reset-password", element: <ResetPasswordPage /> },
         { path: "new-password", element: <NewPasswordPage /> },
-        {path: "verify", element: <VerifyPage /> },
+        { path: "verify", element: <VerifyPage /> },
       ],
     },
     {
@@ -54,8 +54,8 @@ export default function Router() {
         { path: "contact", element: <Contact /> },
         { path: "profile", element: <Profile /> },
 
-        {path: "call", element: <CallPage />},
-        
+        { path: "call", element: <CallPage /> },
+
         { path: "404", element: <Page404 /> },
         { path: "*", element: <Navigate to="/404" replace /> },
       ],
@@ -66,10 +66,10 @@ export default function Router() {
 }
 
 const GeneralApp = Loadable(
-  lazy(() => import("../pages/dashboard/GeneralApp"))
+  lazy(() => import("../pages/dashboard/GeneralApp")),
 );
 const Conversation = Loadable(
-  lazy(() => import("../pages/dashboard/Conversation"))
+  lazy(() => import("../pages/dashboard/Conversation")),
 );
 const Chats = Loadable(lazy(() => import("../pages/dashboard/Chats")));
 const Group = Loadable(lazy(() => import("../pages/dashboard/Group")));
@@ -81,14 +81,14 @@ const LoginPage = Loadable(lazy(() => import("../pages/auth/Login")));
 const VerifyPage = Loadable(lazy(() => import("../pages/auth/Verify")));
 const RegisterPage = Loadable(lazy(() => import("../pages/auth/Register")));
 const ResetPasswordPage = Loadable(
-  lazy(() => import("../pages/auth/ResetPassword"))
+  lazy(() => import("../pages/auth/ResetPassword")),
 );
 const NewPasswordPage = Loadable(
-  lazy(() => import("../pages/auth/NewPassword"))
+  lazy(() => import("../pages/auth/NewPassword")),
 );
 
 // Settings
 const Settings = Loadable(lazy(() => import("../pages/dashboard/Settings")));
 const Profile = Loadable(
-  lazy(() => import("../pages/dashboard/Settings/Profile"))
+  lazy(() => import("../pages/dashboard/Settings/Profile")),
 );

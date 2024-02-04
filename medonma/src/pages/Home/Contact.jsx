@@ -1,7 +1,19 @@
+/**
+    * @description      : 
+    * @author           : 
+    * @group            : 
+    * @created          : 03/02/2024 - 18:06:55
+    * 
+    * MODIFICATION LOG
+    * - Version         : 1.0.0
+    * - Date            : 03/02/2024
+    * - Author          : 
+    * - Modification    : 
+**/
 import React from 'react';
 import { Container, Typography } from '@mui/material';
 import'./Contact';
-import Navbar from './Navbar';
+// import Navbar from './Navbar';
 
 const Contact = () => {
   return (
@@ -9,7 +21,7 @@ const Contact = () => {
     style={{
       backgroundImage: `url(https://www.nidirect.gov.uk/sites/default/files/images/news/blood-donation.jpg)`, // Replace with the correct URL
     }}>
-      <Navbar />
+      
       <header>
         <Container>
           <Typography variant="h4" gutterBottom textAlign="center">

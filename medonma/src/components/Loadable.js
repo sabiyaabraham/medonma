@@ -5,11 +5,14 @@ import Loader from "./Loader";
 
 // ==============================|| LOADABLE - LAZY LOADING ||============================== //
 
-const Loadable = (Component) => (props) =>
-  (
+const Loadable = (Component) => {
+  const LazyComponent = React.lazy(Component);
+
+  return (props) => (
     <Suspense fallback={<Loader />}>
-      <Component {...props} />
+      <LazyComponent {...props} />
     </Suspense>
   );
+};
 
 export default Loadable;

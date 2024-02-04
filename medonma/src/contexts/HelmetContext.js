@@ -1,19 +1,10 @@
-/**
-    * @description      : 
-    * @author           : 
-    * @group            : 
-    * @created          : 03/02/2024 - 12:58:33
-    * 
-    * MODIFICATION LOG
-    * - Version         : 1.0.0
-    * - Date            : 03/02/2024
-    * - Author          : 
-    * - Modification    : 
-**/
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 
-const helmetContext = createContext("");
+const helmetContext = createContext({
+  setTitle: () => {},
+  setDescription: () => {},
+});
 
 export const HelmetProvider = ({ children }) => {
   const [focus, setFocus] = useState(true);
@@ -52,5 +43,5 @@ export const HelmetProvider = ({ children }) => {
 };
 
 export function useHelmet() {
- return useContext(helmetContext);
+  return useContext(helmetContext);
 }

@@ -1,69 +1,35 @@
-/**
-    * @description      : 
-    * @author           : 
-    * @group            : 
-    * @created          : 03/02/2024 - 12:48:52
-    * 
-    * MODIFICATION LOG
-    * - Version         : 1.0.0
-    * - Date            : 03/02/2024
-    * - Author          : 
-    * - Modification    : 
-**/
-import React from 'react';
-import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
+import React from "react";
+import { AppBar, Box, Button, IconButton, Toolbar, Typography } from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu"; // Import MenuIcon or your preferred icon
 
 const Navbar = () => {
   return (
-    <>
-    <Box
-    style={{
-      justifyContent: "space-between",
-      p: 1,
-      backgroundColor: 'blue',
-      backgroundPosition: 'center',
-      display: 'flex',
-      flexDirection: 'column',
-    }}
-    >
-      <AppBar position="static" style={{ background: 'transparent ', boxShadow: 'none' }}>
+      <AppBar position="static" style={{backgroundColor: "blue", boxShadow: "none" }}>
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 1 }}
-          >
-            {/* Add your menu icon here if needed */}
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} align='left'>
+          
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             MEDONMA LIFE CARE
           </Typography>
-          <Button color="inherit" onClick={() => window.location.href = '/home'}>
-            Home
-          </Button>
-          <Button color="inherit" onClick={() => window.location.href = '/about'}>
-            About
-          </Button>
-          <Button color="inherit" onClick={() => window.location.href = '/contact'}>
-            Contact
-          </Button>
-          <Button color="inherit" onClick={() => window.location.href = '/login'}>
-            Login
-          </Button>
-          <Button color="inherit" onClick={() => window.location.href = '/signup'}>
-            Signup
-          </Button>
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <Button color="inherit" onClick={() => (window.location.href = "/home")}>
+              Home
+            </Button>
+            <Button color="inherit" onClick={() => (window.location.href = "/about")}>
+              About
+            </Button>
+            <Button color="inherit" onClick={() => (window.location.href = "/contact")}>
+              Contact
+            </Button>
+            <Button color="inherit" onClick={() => (window.location.href = "/login")}>
+              Login
+            </Button>
+            <Button color="inherit" onClick={() => (window.location.href = "/signup")}>
+              Signup
+            </Button>
+          </Box>
         </Toolbar>
       </AppBar>
-      
-    </Box>
-    {/* <Typography variant="h2" component="div" sx={{ flexGrow: 1 }} align='center'>
-    MEDONMA LIFE CARE
-  </Typography> */}
-  </>
   );
-}
+};
 
 export default Navbar;
