@@ -22,6 +22,7 @@ const Login = Loadable(() => import("../pages/Auth/Login"));
 
 const Home = Loadable(() => import("../pages/Home/Home"));
 
+const Signup = Loadable(() => import("../pages/Auth/create"));
 // ==============================|| ROUTING COMPONENT ||============================== //
 
 const ThemeRoutes = () => {
@@ -33,6 +34,10 @@ const ThemeRoutes = () => {
         {
           path: "login",
           element: <Login />,
+        },
+        {
+          path: "signup",
+          element: <Signup />,
         },
         {
           path: "home",

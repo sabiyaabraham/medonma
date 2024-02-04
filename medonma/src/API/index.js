@@ -39,13 +39,12 @@ const api = (function () {
     }
 
     try {
-      
       const response = await fetch(url, options);
       return await response.json();
     } catch (error) {
       console.error("Request failed:", error.message);
-    //   notify.error(error.message); // Display error message using notify
-      throw {error: true, message: error};
+      //   notify.error(error.message); // Display error message using notify
+      throw { error: true, message: error };
     }
   };
 

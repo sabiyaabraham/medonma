@@ -27,37 +27,35 @@ const Login = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({
-			...formData,
-			[event.target.name]: event.target.value,
-		});
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const yourApiCall = async (data) => {
     try {
       const deviceInfoResponse = await fetch(
-        'https://api.ipregistry.co/?key=avx02aeoi63vo3vt'
+        "https://api.ipregistry.co/?key=avx02aeoi63vo3vt",
       );
       const deviceInfo = await deviceInfoResponse.json();
 
       // Construct the URL with query parameters
       const queryParams = {
-        'email': data.email,
-        'password': data.password,
-        'deviceData[publicIP]': deviceInfo.ip,
-        'deviceData[timeZone]': deviceInfo.time_zone.id,
-        'deviceData[location][latitude]': deviceInfo.location.latitude,
-        'deviceData[location][longitude]': deviceInfo.location.longitude,
-        'deviceData[location_]': `${deviceInfo.location.city}, ${deviceInfo.location.region.name}`,
-        'deviceData[browser][isBrowser]': true,
-        'deviceData[browser][isMobile]': navigator.userAgentData.mobile,
-        'deviceData[browser][userAgent]': deviceInfo.user_agent.header,
-        'deviceData[browser][browserName]': deviceInfo.user_agent.name,
-        'deviceData[browser][browserVersion]':
-          deviceInfo.user_agent.version,
-        'deviceData[os]': deviceInfo.user_agent.os.name,
-        'deviceData[device]': deviceInfo.user_agent.device.name,
-        'deviceData[deviceID]':
-          'fyuusvjhatsyudyguyjcmkdksajdasidjydfudsiufbd',
+        email: data.email,
+        password: data.password,
+        "deviceData[publicIP]": deviceInfo.ip,
+        "deviceData[timeZone]": deviceInfo.time_zone.id,
+        "deviceData[location][latitude]": deviceInfo.location.latitude,
+        "deviceData[location][longitude]": deviceInfo.location.longitude,
+        "deviceData[location_]": `${deviceInfo.location.city}, ${deviceInfo.location.region.name}`,
+        "deviceData[browser][isBrowser]": true,
+        "deviceData[browser][isMobile]": navigator.userAgentData.mobile,
+        "deviceData[browser][userAgent]": deviceInfo.user_agent.header,
+        "deviceData[browser][browserName]": deviceInfo.user_agent.name,
+        "deviceData[browser][browserVersion]": deviceInfo.user_agent.version,
+        "deviceData[os]": deviceInfo.user_agent.os.name,
+        "deviceData[device]": deviceInfo.user_agent.device.name,
+        "deviceData[deviceID]": "fyuusvjhatsyudyguyjcmkdksajdasidjydfudsiufbd",
       };
 
       const res = await API.get("auth/login", queryParams);
@@ -66,7 +64,6 @@ const Login = () => {
       } else {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("email", res.data.email);
-
       }
     } catch (error) {
       setError(error.message); // Store the error message
@@ -103,7 +100,7 @@ const Login = () => {
               required
               id="email"
               name="email"
-						  value={formData.email}
+              value={formData.email}
               label="Email"
               onChange={handleChange}
               variant="filled"

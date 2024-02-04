@@ -1,5 +1,5 @@
 /**
- * @description      : Login component with asynchronous API call handling
+ * @description      : create component with asynchronous API call handling
  * @author           : Your Name
  * @group            : Your Group
  * @created          : 03/02/2024 - 17:59:35
@@ -16,7 +16,7 @@ import React, { useEffect } from "react";
 import Navbar from "../../Navbar";
 import Form from "../../components/Form/Form";
 
-const Login = () => {
+const Create = () => {
   useEffect(() => {
     // Check if token exists in local storage
     const token = localStorage.getItem("token");
@@ -31,9 +31,13 @@ const Login = () => {
     <>
       <Navbar />
 
-      <Form formTitle={"Login Page"} submitBtn={"Login"} formType={"login"} />
+      <Form
+        formTitle={"Register"}
+        submitBtn={"Register"}
+        formType={"register"}
+      />
     </>
   );
 };
 
-export default Login;
+export default Create;

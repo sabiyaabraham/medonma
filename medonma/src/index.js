@@ -25,14 +25,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <HelmetProvider>
       <HelmetProviderMode>
-      <BrowserRouter>
-        <SnackbarProvider
-          maxSnack={3}
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        >
-          <Router />
-        </SnackbarProvider>
-      </BrowserRouter>
+        <BrowserRouter>
+          <SnackbarProvider
+            maxSnack={3}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          >
+            <Router />
+          </SnackbarProvider>
+        </BrowserRouter>
       </HelmetProviderMode>
     </HelmetProvider>
   </React.StrictMode>,
