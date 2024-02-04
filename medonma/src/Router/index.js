@@ -15,7 +15,6 @@ import React from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 
 // Import components/pages
-import Navbar from "../Navbar";
 import Loadable from "../components/Loadable";
 
 // Lazy-loaded components

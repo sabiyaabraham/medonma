@@ -10,7 +10,7 @@
  * - Author          : Your Name
  * - Modification    : Updated API call handling
  **/
-import { Grid, Typography, useMediaQuery } from "@mui/material";
+import { Grid, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/system";
 import React, { useEffect } from "react";
 import Navbar from "../../Navbar";
