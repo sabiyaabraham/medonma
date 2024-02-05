@@ -44,7 +44,8 @@ const api = (function () {
     } catch (error) {
       console.error("Request failed:", error.message);
       //   notify.error(error.message); // Display error message using notify
-      throw { error: true, message: error };
+      // throw { error: true, message: error };
+      return { error: true, message: error.message };
     }
   };
 

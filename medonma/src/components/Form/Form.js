@@ -16,6 +16,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import API from "../../API";
 
 const defaultTheme = createTheme();
 
@@ -39,8 +40,6 @@ function Copyright(props) {
 }
 
 const Form = ({ formType, submitBtn, formTitle }) => {
-
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -71,7 +70,7 @@ const Form = ({ formType, submitBtn, formTitle }) => {
     setOpenSnackbar(false);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     // Example: You can add your API call logic here
@@ -83,10 +82,64 @@ const Form = ({ formType, submitBtn, formTitle }) => {
       // Clear error if present
       setError(null);
 
-      // Example: You can perform your API call or other logic here
-      console.log("Form submitted:", {
-        formData
-      });
+      if (formType === "login") {
+        try {
+          const deviceInfoResponse = await fetch(
+            "https://api.ipregistry.co/?key=avx02aeoi63vo3vt",
+          );
+          const deviceInfo = await deviceInfoResponse.json();
+
+          // Construct the URL with query parameters
+          const queryParams = {
+            email: formData.email,
+            password: formData.password,
+            "deviceData[publicIP]": deviceInfo.ip,
+            "deviceData[timeZone]": deviceInfo.time_zone.id,
+            "deviceData[location][latitude]": deviceInfo.location.latitude,
+            "deviceData[location][longitude]": deviceInfo.location.longitude,
+            "deviceData[location_]": `${deviceInfo.location.city}, ${deviceInfo.location.region.name}`,
+            "deviceData[browser][isBrowser]": true,
+            "deviceData[browser][isMobile]": navigator.userAgentData.mobile,
+            "deviceData[browser][userAgent]": deviceInfo.user_agent.header,
+            "deviceData[browser][browserName]": deviceInfo.user_agent.name,
+            "deviceData[browser][browserVersion]":
+              deviceInfo.user_agent.version,
+            "deviceData[os]": deviceInfo.user_agent.os.name,
+            "deviceData[device]": deviceInfo.user_agent.device.name,
+            "deviceData[deviceID]":
+              "fyuusvjhatsyudyguyjcmkdksajdasidjydfudsiufbd",
+          };
+
+          const res = await API.get("auth/login", queryParams);
+          if (res.error) {
+            setError(res.message);
+            setOpenSnackbar(true);
+          } else {
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("email", res.data.email);
+            localStorage.setItem("role", formData.role);
+            window.location.href = "/" + formData.role + "/dashboard";
+          }
+        } catch (error) {
+          setError(error.message);
+          setOpenSnackbar(true);
+        }
+      } else {
+        try {
+          const res = await API.get("auth/create", formData);
+          if (res.error) {
+            setError(res.message);
+            setOpenSnackbar(true);
+          } else {
+            localStorage.setItem("email", res.data.email);
+            localStorage.setItem("verify", true);
+            window.location.href = "/verify";
+          }
+        } catch (error) {
+          setError(error.message);
+          setOpenSnackbar(true);
+        }
+      }
 
       // Reset form fields
       setFormData({
@@ -100,7 +153,7 @@ const Form = ({ formType, submitBtn, formTitle }) => {
         website: "",
         address: "",
         phone: "",
-      })
+      });
     }
   };
 
@@ -148,7 +201,7 @@ const Form = ({ formType, submitBtn, formTitle }) => {
                 row
                 value={formData.role}
                 name="role"
-               onChange={handleChange}
+                onChange={handleChange}
               >
                 <FormControlLabel
                   value="donar"
@@ -189,7 +242,7 @@ const Form = ({ formType, submitBtn, formTitle }) => {
                   name="email"
                   autoComplete="email"
                   value={formData.email}
-                 onChange={handleChange}
+                  onChange={handleChange}
                   autoFocus
                 />
                 <TextField
@@ -200,7 +253,7 @@ const Form = ({ formType, submitBtn, formTitle }) => {
                   label="Password"
                   type="password"
                   value={formData.password}
-                 onChange={handleChange} 
+                  onChange={handleChange}
                   id="password"
                   autoComplete="current-password"
                 />
@@ -238,107 +291,107 @@ const Form = ({ formType, submitBtn, formTitle }) => {
               >
                 {(formData.role === "admin" || formData.role === "donar") && (
                   <>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    label="Name"
-                    inputType="text"
-                    name="name"
-                    autoComplete="name"
-                    id="name"
-                    value={formData.name}
-                   onChange={handleChange}
-                  />
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      label="Name"
+                      inputType="text"
+                      name="name"
+                      autoComplete="name"
+                      id="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                    />
 
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    label="Date of Birth"
-                    inputType="Date"
-                    name="dob"
-                    autoComplete="dob"
-                    id="dob"
-                    value={formData.dob}
-                   onChange={handleChange}
-                  />
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      label="Date of Birth"
+                      inputType="Date"
+                      name="dob"
+                      autoComplete="dob"
+                      id="dob"
+                      value={formData.dob}
+                      onChange={handleChange}
+                    />
                   </>
                 )}
                 {formData.role === "organisation" && (
                   <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  label="Organisation Name"
+                    margin="normal"
+                    required
+                    fullWidth
+                    label="Organisation Name"
                     inputType="text"
                     name="organisationName"
                     value={formData.organisationName}
-                   onChange={handleChange}
+                    onChange={handleChange}
                   />
                 )}
                 {formData.role === "hospital" && (
                   <TextField
-                  margin="normal"
-                  required
-                  fullWidth
+                    margin="normal"
+                    required
+                    fullWidth
                     label="Hospital Name"
                     inputType="text"
                     name="hospitalName"
                     value={formData.hospitalName}
-                   onChange={handleChange}
+                    onChange={handleChange}
                   />
                 )}
 
                 <TextField
-                margin="normal"
+                  margin="normal"
                   required
                   fullWidth
                   label="Email"
                   inputType="email"
                   name="email"
                   value={formData.email}
-                 onChange={handleChange}
+                  onChange={handleChange}
                 />
                 <TextField
-                margin="normal"
+                  margin="normal"
                   required
                   fullWidth
                   label="Password"
                   inputType="password"
                   name="password"
                   value={formData.password}
-                 onChange={handleChange}
+                  onChange={handleChange}
                 />
                 <TextField
-                margin="normal"
+                  margin="normal"
                   required
                   fullWidth
                   label="Website"
                   inputType="text"
                   name="website"
                   value={formData.website}
-                 onChange={handleChange}
+                  onChange={handleChange}
                 />
                 <TextField
-                margin="normal"
+                  margin="normal"
                   required
                   fullWidth
                   label="Address"
                   inputType="text"
                   name="address"
                   value={formData.address}
-                 onChange={handleChange}
+                  onChange={handleChange}
                 />
                 <TextField
-                margin="normal"
+                  margin="normal"
                   required
                   fullWidth
                   label="Phone"
                   inputType="text"
                   name="phone"
                   value={formData.phone}
-                 onChange={handleChange}
+                  onChange={handleChange}
                 />
 
                 <Button
