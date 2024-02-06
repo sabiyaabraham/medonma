@@ -1,5 +1,3 @@
-// import { notify } from 'your-notify-library'; // Replace 'your-notify-library' with the actual import statement for your notify library
-
 const api = (function () {
   const baseUrl = "https://api.medonma.me/api/v1/"; // Set your default API base URL
 

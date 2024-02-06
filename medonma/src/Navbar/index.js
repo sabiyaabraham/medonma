@@ -1,13 +1,15 @@
 import React from "react";
 // eslint-disable-next-line
-import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Button, Toolbar, Typography, Avatar } from "@mui/material";
+import LOGO from "../assets/images/medonma.png"
 
 const Navbar = () => {
   return (
     <AppBar position="static" style={{ boxShadow: "none" }}>
       <Toolbar>
+        <Avatar src={LOGO} sx={{ width: 30, height: 30 }} alt="MEDONMA"/>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          MEDONMA LIFE CARE
+          &nbsp;&nbsp;&nbsp;MEDONMA LIFE CARE
         </Typography>
         <Box sx={{ display: { xs: "none", md: "flex" } }}>
           <Button

@@ -1,5 +1,5 @@
 {
-    "workbench.iconTheme": "material-icon-theme",
+    "workbench.iconTheme": "eq-material-theme-icons-darker",
     "editor.tabCompletion": "on",
     "diffEditor.codeLens": true,
     "better-comments.multilineComments": true,

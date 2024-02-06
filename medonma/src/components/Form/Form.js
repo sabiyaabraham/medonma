@@ -43,7 +43,7 @@ const Form = ({ formType, submitBtn, formTitle }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    role: "donar",
+    role: "donor",
     dob: "",
     name: "",
     organisationName: "",
@@ -141,19 +141,7 @@ const Form = ({ formType, submitBtn, formTitle }) => {
         }
       }
 
-      // Reset form fields
-      setFormData({
-        email: "",
-        password: "",
-        role: "donar",
-        dob: "",
-        name: "",
-        organisationName: "",
-        hospitalName: "",
-        website: "",
-        address: "",
-        phone: "",
-      });
+      
     }
   };
 
@@ -204,9 +192,9 @@ const Form = ({ formType, submitBtn, formTitle }) => {
                 onChange={handleChange}
               >
                 <FormControlLabel
-                  value="donar"
+                  value="donor"
                   control={<Radio />}
-                  label="Donar"
+                  label="Donor"
                 />
                 <FormControlLabel
                   value="admin"
@@ -289,7 +277,7 @@ const Form = ({ formType, submitBtn, formTitle }) => {
                 onSubmit={handleFormSubmit}
                 sx={{ mt: 1 }}
               >
-                {(formData.role === "admin" || formData.role === "donar") && (
+                {(formData.role === "admin" || formData.role === "donor") && (
                   <>
                     <TextField
                       margin="normal"
